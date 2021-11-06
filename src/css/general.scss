@@ -1,0 +1,25 @@
+$light-background-color: rgba(251, 224, 195, 0.5);
+$light-color: #fbe0c3;
+$main-color: #ffbb98;
+$main-color-hover: #fcad85;
+$grey-color: #7d8e95;
+$dark-color: #344648;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  border: none;
+  letter-spacing: 0.05rem;
+}
+
+body {
+  background: $light-background-color;
+  padding: 0 1rem;
+  color: $dark-color;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  letter-spacing: 0.05rem;
+}
