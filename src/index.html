@@ -20,7 +20,48 @@
             <p class="category-selection-title">Викторни по картинам</p>
           </div>
         </div>
-        <button class="settings-btn">Настройки</button>
+        <button class="settings-btn btn">Настройки</button>
+      </div>
+    </section>
+    <section class="settings">
+      <div class="container settings-container">
+        <div class="settings-top">
+          <div class="logo"></div>
+          <h2 class="title">Настройки</h2>
+        </div>
+        <div class="volume">
+          <h3 class="volume-title title">Звук</h3>
+          <div class="volume-wrapper">
+            <button class="volume-icon"></button>
+            <input
+              type="range"
+              class="volume-bar"
+              min="0"
+              max="1"
+              value="0.5"
+              step="0.01"
+            />
+          </div>
+        </div>
+        <div class="time-game">
+          <h3 class="time-game-title title">Игра на время</h3>
+          <div class="time-game-wrapper">
+            <p class="time-game-off">Выкл</p>
+            <div class="switch-wrapper">
+              <label class="switch">
+                <input
+                  class="checkbox"
+                  data-name="time"
+                  type="checkbox"
+                  id="checkBox"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <p class="time-game-on">Вкл</p>
+          </div>
+        </div>
+        <button class="settings-btn-back btn">Назад</button>
       </div>
     </section>
   </body>

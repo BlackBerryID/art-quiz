@@ -28,3 +28,31 @@ body {
   min-height: 95vh;
   min-width: 95vw;
 }
+
+.logo {
+  width: 6rem;
+  height: 6rem;
+  margin-top: 1rem;
+  background: url(../assets/png/logo.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.btn {
+  position: relative;
+  width: 10rem;
+  height: 3rem;
+  background-color: $main-color;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: $main-color-hover;
+  }
+}

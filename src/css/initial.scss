@@ -1,18 +1,12 @@
+.initial {
+  display: none;
+}
+
 .initial-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  .logo {
-    width: 6rem;
-    height: 6rem;
-    margin-top: 1rem;
-    background: url(../assets/png/logo.png);
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
 
   .category-selection {
     margin: 2rem 0;
@@ -64,18 +58,8 @@
   }
 
   .settings-btn {
-    position: relative;
-    width: 10rem;
-    height: 3rem;
-    background-color: $main-color;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 1rem;
     text-align: right;
-    border-radius: 0.5rem;
     padding-right: 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s;
 
     &::before {
       content: "";
@@ -88,10 +72,6 @@
       background: url(../assets/svg/settings.svg);
       background-size: 100%;
       transition: all 0.2s;
-    }
-
-    &:hover {
-      background-color: $main-color-hover;
     }
 
     &:hover::before {
