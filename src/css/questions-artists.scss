@@ -1,0 +1,86 @@
+.questions {
+  &-artists {
+    &-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &-img {
+      width: 20rem;
+      margin: 1rem 0 0.5rem;
+    }
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 18rem;
+
+    .timer {
+      font-size: 2rem;
+      margin-right: 0.5rem;
+    }
+  }
+
+  &-btn {
+    height: 2.2rem;
+    width: 4rem;
+    font-size: 0.9rem;
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+
+    .dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      margin: 0 0.2rem;
+      border: 0.05rem solid $grey-color;
+      border-radius: 50%;
+    }
+  }
+
+  .answers-artists {
+    &-list {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0.5rem 0;
+    }
+
+    &-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50%;
+      height: 4rem;
+      padding: 0 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: $light-color;
+      }
+
+      &:nth-child(2) {
+        border-left: 0.05rem solid $grey-color;
+      }
+
+      &:nth-child(3) {
+        border-top: 0.05rem solid $grey-color;
+      }
+
+      &:last-child {
+        border-top: 0.05rem solid $grey-color;
+        border-left: 0.05rem solid $grey-color;
+      }
+    }
+
+    .artist-name {
+      font-size: 1rem;
+      // text-align: center;
+    }
+  }
+}
