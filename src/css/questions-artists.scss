@@ -7,9 +7,20 @@
       align-items: center;
     }
 
+    &-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     &-img {
       width: 20rem;
-      margin: 1rem 0 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    &-question {
+      padding: 0 1rem;
+      text-align: center;
     }
   }
 
@@ -17,11 +28,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 18rem;
+    width: 20rem;
 
     .timer {
       font-size: 2rem;
-      margin-right: 0.5rem;
+      margin-right: 1rem;
     }
   }
 
@@ -38,7 +49,7 @@
     .dot {
       width: 0.5rem;
       height: 0.5rem;
-      margin: 0 0.2rem;
+      margin: 0.5rem 0.2rem;
       border: 0.05rem solid $grey-color;
       border-radius: 50%;
     }
@@ -49,6 +60,7 @@
       display: flex;
       flex-wrap: wrap;
       margin: 0.5rem 0;
+      width: 20rem;
     }
 
     &-item {
@@ -56,7 +68,7 @@
       justify-content: center;
       align-items: center;
       width: 50%;
-      height: 4rem;
+      height: 3.5rem;
       padding: 0 0.8rem;
       cursor: pointer;
       transition: all 0.2s;

@@ -29,6 +29,10 @@ body {
   min-width: 95vw;
 }
 
+.container {
+  max-width: 22.5rem;
+}
+
 ul {
   list-style: none;
 }
@@ -36,7 +40,7 @@ ul {
 .logo {
   width: 6rem;
   height: 6rem;
-  margin-top: 1rem;
+  // margin-top: 1rem;
   background: url(../assets/png/logo.png);
   background-position: center;
   background-size: contain;

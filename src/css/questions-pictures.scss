@@ -1,4 +1,5 @@
 .questions-pictures {
+  // display: none;
   &-container {
     display: flex;
     flex-direction: column;
@@ -14,13 +15,13 @@
     &-list {
       display: flex;
       flex-direction: column;
-      margin-top: 0.5rem;
+      // margin-top: 0.5rem;
     }
 
     &-item {
       display: block;
       width: 20.5rem;
-      height: 6rem;
+      height: 6.5rem;
       cursor: pointer;
       margin-top: 0.5rem;
       transition: all 0.4s;
