@@ -53,6 +53,29 @@
         </div>
         <div class="time-game">
           <h3 class="time-game-title title">Игра на время</h3>
+          <div class="time-amount">
+            <button
+              class="time-amount-btn btn"
+              onclick="this.nextElementSibling.stepDown()"
+            >
+              −
+            </button>
+            <input
+              class="time-amount-input"
+              type="number"
+              min="5"
+              max="30"
+              value="20"
+              step="5"
+              readonly
+            />
+            <button
+              class="time-amount-btn btn"
+              onclick="this.previousElementSibling.stepUp()"
+            >
+              +
+            </button>
+          </div>
           <div class="time-game-wrapper">
             <p class="time-game-off">Выкл</p>
             <div class="switch-wrapper">
