@@ -1,5 +1,3 @@
-import CustomAudio from "./customAudio";
-
 export default class Menu {
   constructor() {
     this.artistsGameBtn = document.querySelector(".category-selection-artists");
@@ -10,7 +8,7 @@ export default class Menu {
     this.settingsPage = document.querySelector(".settings");
     this.initialMenu = document.querySelector(".initial");
     this.category = document.querySelector(".categories");
-    this.player = new CustomAudio("../assets/mp3/push.mp3");
+    this.player = new Audio("../assets/mp3/push.mp3");
   }
 
   openCategory() {
