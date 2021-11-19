@@ -1,3 +1,5 @@
+import { settingsData } from "../index";
+
 export default class Settings {
   constructor() {
     this.settingsSection = document.querySelector(".settings");
@@ -8,14 +10,21 @@ export default class Settings {
     this.timeGameToggle = document.querySelector(".checkbox");
     this.backButton = document.querySelector(".settings-btn-back");
     this.player = new Audio("../assets/mp3/push.mp3");
-    this.settingsData = localStorage.getItem("settingsData") || {};
+    this.previousVolume;
 
-    this.volumeBar.addEventListener("input", this.changeVolume.bind(this));
-    this.backButton.addEventListener("click", () => this.goBack());
-    this.volumeBtn.addEventListener(
-      "click",
-      this.toggleVolumeButton.bind(this)
-    );
+    this.volumeBar.addEventListener("input", () => {
+      this.changeVolume.call(this);
+      this.play();
+    });
+    this.volumeBtn.addEventListener("click", () => {
+      this.toggleVolumeButton.call(this);
+      this.play();
+    });
+    this.backButton.addEventListener("click", () => {
+      this.goBack();
+      this.writeSettingsData();
+    });
+    window.addEventListener("beforeunload", this.writeSettingsData.bind(this));
   }
 
   goBack() {
@@ -34,25 +43,27 @@ export default class Settings {
   toggleVolumeButton() {
     this.player.currentTime = 0;
     if (this.player.muted) {
-      this.volumeBar.value = 0.5;
+      this.volumeBar.value = this.previousVolume;
       this.changeVolume();
     } else {
+      this.previousVolume = this.player.volume;
       this.volumeBar.value = 0;
       this.changeVolume();
     }
   }
 
-  changeVolume() {
-    const value = this.volumeBar.value * 100;
-    this.volumeBar.style.background = `linear-gradient(to right, #ffbb98 0%, #ffbb98 ${value}%, rgba(52, 70, 72, 0.1) ${value}%, rgba(52, 70, 72, 0.1) 100%)`;
-    this.player.volume = this.volumeBar.value;
+  changeVolume(v) {
+    const value = v ? v : this.volumeBar.value;
+    this.volumeBar.style.background = `linear-gradient(to right, #ffbb98 0%, #ffbb98 ${
+      value * 100
+    }%, rgba(52, 70, 72, 0.1) ${value * 100}%, rgba(52, 70, 72, 0.1) 100%)`;
+    this.player.volume = value;
     if (this.player.volume === 0) {
       this.player.muted = true;
     } else {
       this.player.muted = false;
     }
     this.toggleVolumeIcon();
-    this.player.play();
   }
 
   toggleVolumeIcon() {
@@ -63,5 +74,24 @@ export default class Settings {
       this.volumeBtn.style.background = "url(./assets/svg/volume.svg)";
       this.volumeBtn.style.marginTop = "0";
     }
+  }
+
+  play() {
+    this.player.currentTime = 0;
+    this.player.play();
+  }
+
+  writeSettingsData() {
+    settingsData.isTimeGame = this.timeGameToggle.checked;
+    settingsData.timeAmount = this.timeInput.value;
+    settingsData.volume = this.player.volume;
+    localStorage.setItem("settingsData", JSON.stringify(settingsData));
+  }
+
+  loadSettingsData() {
+    this.timeGameToggle.checked = settingsData.isTimeGame;
+    this.timeInput.value = settingsData.timeAmount;
+    this.volumeBar.value = settingsData.volume;
+    this.changeVolume(settingsData.volume);
   }
 }
