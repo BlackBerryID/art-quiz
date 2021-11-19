@@ -1,4 +1,5 @@
 import { settingsData } from "../index";
+import Category from "./category";
 
 export default class Menu {
   constructor() {
@@ -9,22 +10,33 @@ export default class Menu {
     this.settingsBtn = document.querySelector(".settings-btn");
     this.settingsPage = document.querySelector(".settings");
     this.initialMenu = document.querySelector(".initial");
-    this.category = document.querySelector(".categories");
+    this.categoryPage = document.querySelector(".categories");
     this.player = new Audio("../assets/mp3/push.mp3");
+    this.category = new Category();
+
+    this.settingsBtn.addEventListener("click", this.openSettings.bind(this));
+    [this.artistsGameBtn, this.picturesGameBtn].forEach((item) =>
+      item.addEventListener("click", (e) => this.openCategory.call(this, e))
+    );
   }
 
-  openCategory() {
+  openCategory(e) {
     this.initialMenu.style.setProperty("pointer-events", "none");
     this.initialMenu.style.setProperty("opacity", "0");
     setTimeout(showCategoryPage.bind(this), 200);
     function showCategoryPage() {
       this.initialMenu.style.setProperty("display", "none");
       this.initialMenu.style.setProperty("pointer-events", "initial");
-      this.category.style.setProperty("display", "block");
-      setTimeout(() => this.category.style.setProperty("opacity", "1"), 50);
+      this.categoryPage.style.setProperty("display", "block");
+      setTimeout(() => this.categoryPage.style.setProperty("opacity", "1"), 50);
     }
     this.player.volume = settingsData.volume;
     this.player.play();
+    if (e.path[1].classList.contains("artists")) {
+      this.category.show("artists");
+    } else if (e.path[1].classList.contains("pictures")) {
+      this.category.show("pictures");
+    }
   }
 
   openSettings() {
