@@ -37,7 +37,7 @@ export default class Settings {
       this.initialMenu.style.setProperty("display", "block");
       setTimeout(() => this.initialMenu.style.setProperty("opacity", "1"), 50);
     }
-    this.player.play();
+    this.play();
   }
 
   toggleVolumeButton() {

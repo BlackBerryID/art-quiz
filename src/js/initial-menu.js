@@ -1,3 +1,5 @@
+import { settingsData } from "../index";
+
 export default class Menu {
   constructor() {
     this.artistsGameBtn = document.querySelector(".category-selection-artists");
@@ -21,6 +23,7 @@ export default class Menu {
       this.category.style.setProperty("display", "block");
       setTimeout(() => this.category.style.setProperty("opacity", "1"), 50);
     }
+    this.player.volume = settingsData.volume;
     this.player.play();
   }
 
@@ -34,6 +37,7 @@ export default class Menu {
       this.settingsPage.style.setProperty("display", "block");
       setTimeout(() => this.settingsPage.style.setProperty("opacity", "1"), 50);
     }
+    this.player.volume = settingsData.volume;
     this.player.play();
   }
 }
