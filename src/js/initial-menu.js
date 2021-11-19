@@ -49,6 +49,7 @@ export default class Menu {
       this.settingsPage.style.setProperty("display", "block");
       setTimeout(() => this.settingsPage.style.setProperty("opacity", "1"), 50);
     }
+    settingsData.prevPage = "menu";
     this.player.volume = settingsData.volume;
     this.player.play();
   }

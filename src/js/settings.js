@@ -9,6 +9,7 @@ export default class Settings {
     this.timeInput = document.querySelector(".time-amount-input");
     this.timeGameToggle = document.querySelector(".checkbox");
     this.backButton = document.querySelector(".settings-btn-back");
+    this.categoryPage = document.querySelector(".categories");
     this.player = new Audio("../assets/mp3/push.mp3");
     this.previousVolume;
 
@@ -21,21 +22,22 @@ export default class Settings {
       this.play();
     });
     this.backButton.addEventListener("click", () => {
-      this.goBack();
+      this.goBack(settingsData.prevPage);
       this.writeSettingsData();
     });
     window.addEventListener("beforeunload", this.writeSettingsData.bind(this));
   }
 
-  goBack() {
+  goBack(prevPage) {
+    let page = prevPage === "menu" ? this.initialMenu : this.categoryPage;
     this.settingsSection.style.setProperty("pointer-events", "none");
     this.settingsSection.style.setProperty("opacity", "0");
     setTimeout(showMenuPage.bind(this), 200);
     function showMenuPage() {
       this.settingsSection.style.setProperty("display", "none");
       this.settingsSection.style.setProperty("pointer-events", "initial");
-      this.initialMenu.style.setProperty("display", "block");
-      setTimeout(() => this.initialMenu.style.setProperty("opacity", "1"), 50);
+      page.style.setProperty("display", "block");
+      setTimeout(() => page.style.setProperty("opacity", "1"), 50);
     }
     this.play();
   }
