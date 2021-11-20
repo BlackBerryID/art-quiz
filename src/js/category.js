@@ -1,4 +1,5 @@
 import { settingsData } from "../index";
+import Game from "../js/game";
 
 export default class Category {
   constructor() {
@@ -8,6 +9,7 @@ export default class Category {
     this.initialMenu = document.querySelector(".initial");
     this.categoryPage = document.querySelector(".categories");
     this.settingsPage = document.querySelector(".settings");
+    this.game = new Game();
     this.monthList = [
       "Январь",
       "Февраль",
@@ -27,6 +29,15 @@ export default class Category {
 
     this.menuBtn.addEventListener("click", this.openMenu.bind(this));
     this.settingsBtn.addEventListener("click", this.openSettings.bind(this));
+    this.cardList.forEach((item) =>
+      item.addEventListener(
+        "click",
+        this.game.startRound.bind(
+          this.game,
+          Array.from(this.cardList).indexOf(item)
+        )
+      )
+    );
   }
 
   show(category) {
@@ -36,7 +47,6 @@ export default class Category {
       const img = card.querySelector("img");
       const score = card.querySelector("card-title-right-answers");
       img.src = `../assets/jpg/${category}/${i + 1}.jpg`;
-      console.log(title);
       title.textContent = this.monthList[i];
       if (!this.categoryData[category][i].hasScore) {
         img.style.setProperty("filter", "grayscale(1)");
@@ -74,8 +84,4 @@ export default class Category {
     this.player.volume = settingsData.volume;
     this.player.play();
   }
-
-  // startGame() {
-
-  // }
 }
