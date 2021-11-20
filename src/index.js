@@ -2,6 +2,8 @@ import "./css/index.scss";
 import Menu from "./js/initial-menu";
 import Settings from "./js/settings";
 import Storage from "./js/localStorage";
+import GameData from "./js/gameData";
+import Game from "./js/game";
 
 // Grab the storage data
 const storage = new Storage();
@@ -16,4 +18,12 @@ const menu = new Menu();
 const settings = new Settings();
 settings.loadSettingsData();
 
-export { settingsData };
+const gameData = new GameData();
+let artistsArray;
+let picturesArray;
+gameData.getGameData("artists").then((result) => (artistsArray = result));
+gameData.getGameData("pictures").then((result) => (picturesArray = result));
+
+const game = new Game();
+
+export { settingsData, artistsArray, picturesArray };

@@ -33,8 +33,10 @@ export default class Menu {
     this.player.volume = settingsData.volume;
     this.player.play();
     if (e.path[1].classList.contains("artists")) {
+      settingsData.activeCategory = "artists";
       this.category.show("artists");
     } else if (e.path[1].classList.contains("pictures")) {
+      settingsData.activeCategory = "pictures";
       this.category.show("pictures");
     }
   }
