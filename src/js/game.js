@@ -61,11 +61,15 @@ export default class Game {
   }
 
   handleRound(roundData, index) {
-    this.artistsRoundPage
-      .querySelectorAll("img")
-      .forEach((item) => item.remove());
+    // define category
     if (settingsData.activeCategory === "artists") {
+      // delete any images
+      this.artistsRoundPage
+        .querySelectorAll("img")
+        .forEach((item) => item.remove());
+      // write the question
       this.artistsQuestion.textContent = "Кто автор этой картины?";
+      // insert img
       const imgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${roundData[index].imageNum}.jpg`;
       const img = new Image();
       img.src = imgURL;
@@ -73,7 +77,28 @@ export default class Game {
       img.onload = () => {
         this.artistsMainBlock.append(img);
       };
+      // prepare answer options
+      let set = new Set();
+      set.add(roundData[index]["author"]);
+      while (set.size < 4) {
+        const randomNum = Math.floor(Math.random() * (119 - 0 + 1)) + 0;
+        set.add(artistsArray[randomNum].author);
+      }
+      // shuffle answer options
+      const answersArray = this.shuffle([...set]);
+      // insert answer options
+      Array.from(this.artistsAnswerList).map(
+        (item) => (item.textContent = answersArray.pop())
+      );
     } else if (settingsData.activeCategory === "pictures") {
     }
+  }
+
+  shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 }
