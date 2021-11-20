@@ -1,0 +1,83 @@
+.popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 20;
+  overflow-y: auto;
+  overflow-x: hidden;
+  visibility: hidden;
+  // opacity: 0;
+
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  // &.active &-wrapper {
+  //   transform: translate(0px, 0px);
+  // }
+
+  &-wrapper {
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 30px 10px;
+    // transform: translate(-100%, 0px);
+  }
+
+  &-content {
+    position: relative;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 320px;
+    height: 400px;
+    background-color: #fcefe0;
+    // border: 0.2rem solid rgb(253, 110, 110);
+    border: 0.2rem solid lightgreen;
+
+    img {
+      width: 80%;
+    }
+
+    .popup-info {
+      margin: 0.5rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      font-size: 0.9rem;
+      width: 8rem;
+      height: 2.5rem;
+    }
+  }
+
+  &-picture-name {
+    font-size: 1.2rem;
+  }
+
+  &-artist-name {
+    font-size: 0.9rem;
+  }
+
+  &-score {
+    position: absolute;
+    top: -50%;
+    color: #fcad85;
+    font-size: 20rem;
+    transition: all 0.5s;
+
+    &:hover {
+      top: 10%;
+      font-size: 8rem;
+    }
+  }
+}
