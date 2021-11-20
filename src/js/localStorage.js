@@ -1,13 +1,13 @@
 export default class Storage {
   initCategoryData() {
-    if (!localStorage.getItem("category")) {
+    if (!localStorage.getItem("categoriesData")) {
       let categoryData = {};
       categoryData.artists = categoryData.pictures = Array(12).fill({
         hasScore: false,
         score: 0,
         pictures: Array(12).fill(false),
       });
-      localStorage.setItem("categoryData", JSON.stringify(categoryData));
+      localStorage.setItem("categoriesData", JSON.stringify(categoryData));
     }
   }
 
@@ -22,11 +22,11 @@ export default class Storage {
     }
   }
 
-  grabSettingData() {
-    return {
-      isTimeGame: JSON.parse(localStorage.getItem("settingsData")).isTimeGame,
-      timeAmount: JSON.parse(localStorage.getItem("settingsData")).timeAmount,
-      volume: JSON.parse(localStorage.getItem("settingsData")).volume,
-    };
+  getSettingData() {
+    return JSON.parse(localStorage.getItem("settingsData"));
+  }
+
+  getCategoriesData() {
+    return JSON.parse(localStorage.getItem("categoriesData"));
   }
 }

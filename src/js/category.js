@@ -1,4 +1,4 @@
-import { settingsData } from "../index";
+import { settingsData, categoriesData } from "../index";
 import Game from "../js/game";
 
 export default class Category {
@@ -24,7 +24,6 @@ export default class Category {
       "Ноябрь",
       "Декабрь",
     ];
-    this.categoryData = JSON.parse(localStorage.getItem("categoryData"));
     this.player = new Audio("../assets/mp3/push.mp3");
 
     this.menuBtn.addEventListener("click", this.openMenu.bind(this));
@@ -41,17 +40,18 @@ export default class Category {
   }
 
   show(category) {
-    for (let i = 0; i < this.categoryData[category].length; i++) {
+    for (let i = 0; i < categoriesData[category].length; i++) {
       const card = this.cardList[i];
       const title = card.querySelector(".card-title-info");
       const img = card.querySelector("img");
-      const score = card.querySelector("card-title-right-answers");
+      const score = card.querySelector(".card-title-right-answers");
+      console.log("score: ", score);
       img.src = `../assets/jpg/${category}/${i + 1}.jpg`;
       title.textContent = this.monthList[i];
-      if (!this.categoryData[category][i].hasScore) {
+      if (!categoriesData[category][i].hasScore) {
         img.style.setProperty("filter", "grayscale(1)");
       } else {
-        score.textContent = this.categoryData[i].score;
+        score.textContent = categoriesData[category][i].score;
       }
     }
   }

@@ -1,4 +1,10 @@
-import { settingsData, artistsArray, picturesArray } from "../index";
+import {
+  settingsData,
+  categoriesData,
+  artistsArray,
+  picturesArray,
+} from "../index";
+import Category from "./category";
 
 export default class Game {
   constructor() {
@@ -12,6 +18,9 @@ export default class Game {
     this.artistsAnswerBody = document.querySelector(".answers-artists-list");
     this.player = new Audio("../assets/mp3/push.mp3");
     this.categoryPage = document.querySelector(".categories");
+    this.answersArray = [];
+    this.cardNum;
+    this.correctAnswers;
 
     // popup
     this.popup = document.querySelector(".popup");
@@ -48,6 +57,7 @@ export default class Game {
   }
 
   startRound(cardNum) {
+    this.cardNum = cardNum;
     const roundData =
       settingsData.activeCategory === "artists"
         ? artistsArray.slice(cardNum * 10, cardNum * 10 + 10)
@@ -142,12 +152,14 @@ export default class Game {
       this.popupContent.style.setProperty("border", "0.2rem solid lightgreen");
       this.dotList[index].style.setProperty("background-color", "#fcad85");
       this.dotList[index].style.setProperty("border-color", "#fcad85");
+      this.answersArray.push(true);
     } else {
       this.popupContent.style.setProperty(
         "border",
         "0.2rem solid rgb(253, 110, 110)"
       );
       this.dotList[index].style.setProperty("background-color", "#7d8e95");
+      this.answersArray.push(false);
     }
     this.showPopup(roundData, img, index);
   }
@@ -183,7 +195,8 @@ export default class Game {
     this.popupImage.src = "../assets/png/result.png";
     this.popupPicture.textContent = "Красавчик!";
     this.popupArtist.textContent = "";
-    this.popupScore.textContent = 7;
+    this.correctAnswers = this.answersArray.filter((item) => item).length;
+    this.popupScore.textContent = this.correctAnswers;
     this.popupContent.style.setProperty("border", "0.2rem solid #fcad85");
     this.popup.style.setProperty("visibility", "visible");
     this.popup.style.setProperty("opacity", "1");
@@ -202,6 +215,19 @@ export default class Game {
     this.popup.style.setProperty("opacity", "0");
     this.popupScore.textContent = "";
     this.popupScore.classList.remove("active");
+    this.writeAnswersData();
     this.goBack();
+  }
+
+  writeAnswersData() {
+    const currentCategory = settingsData.activeCategory;
+    categoriesData[currentCategory][this.cardNum] = {
+      hasScore: true,
+      pictures: this.answersArray,
+      score: this.correctAnswers,
+    };
+    localStorage.setItem("categoriesData", JSON.stringify(categoriesData));
+    const categoryClass = new Category();
+    categoryClass.show(settingsData.activeCategory);
   }
 }

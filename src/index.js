@@ -9,7 +9,8 @@ import Game from "./js/game";
 const storage = new Storage();
 storage.initCategoryData();
 storage.initSettingsData();
-let settingsData = storage.grabSettingData();
+let settingsData = storage.getSettingData();
+let categoriesData = storage.getCategoriesData();
 
 // Menu
 const menu = new Menu();
@@ -26,4 +27,4 @@ gameData.getGameData("pictures").then((result) => (picturesArray = result));
 
 const game = new Game();
 
-export { settingsData, artistsArray, picturesArray };
+export { settingsData, categoriesData, artistsArray, picturesArray };
