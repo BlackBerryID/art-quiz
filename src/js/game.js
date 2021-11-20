@@ -58,6 +58,10 @@ export default class Game {
 
   startRound(cardNum) {
     this.cardNum = cardNum;
+    this.dotList.forEach((item) => {
+      item.style.setProperty("background", "transparent");
+      item.style.setProperty("border-color", "#7d8e95");
+    });
     const roundData =
       settingsData.activeCategory === "artists"
         ? artistsArray.slice(cardNum * 10, cardNum * 10 + 10)

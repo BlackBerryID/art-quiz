@@ -45,12 +45,12 @@ export default class Category {
       const title = card.querySelector(".card-title-info");
       const img = card.querySelector("img");
       const score = card.querySelector(".card-title-right-answers");
-      console.log("score: ", score);
       img.src = `../assets/jpg/${category}/${i + 1}.jpg`;
       title.textContent = this.monthList[i];
       if (!categoriesData[category][i].hasScore) {
         img.style.setProperty("filter", "grayscale(1)");
       } else {
+        img.style.setProperty("filter", "grayscale(0)");
         score.textContent = categoriesData[category][i].score;
       }
     }
