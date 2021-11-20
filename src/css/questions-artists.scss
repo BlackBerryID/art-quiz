@@ -16,6 +16,7 @@
     &-img {
       width: 20rem;
       margin-top: 0.5rem;
+      transition: all 0.2s;
     }
 
     &-question {
@@ -61,6 +62,7 @@
       flex-wrap: wrap;
       margin: 0.5rem 0;
       width: 20rem;
+      transition: all 0.3s;
     }
 
     &-item {

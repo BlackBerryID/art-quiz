@@ -5,6 +5,7 @@ export default class Storage {
       categoryData.artists = categoryData.pictures = Array(12).fill({
         hasScore: false,
         score: 0,
+        pictures: Array(12).fill(false),
       });
       localStorage.setItem("categoryData", JSON.stringify(categoryData));
     }

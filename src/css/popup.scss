@@ -73,12 +73,14 @@
     top: -50%;
     color: #fcad85;
     font-size: 20rem;
-    transition: all 0.5s;
+    transition: top 1s;
     visibility: hidden;
     opacity: 0;
 
-    &:hover {
-      top: 10%;
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      top: 15%;
       font-size: 8rem;
     }
   }
