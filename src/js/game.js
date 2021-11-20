@@ -41,6 +41,7 @@ export default class Game {
       this.categoryPage.style.setProperty("display", "block");
       setTimeout(() => this.categoryPage.style.setProperty("opacity", "1"), 50);
     }
+    this.player.currentTime = 0;
     this.player.volume = settingsData.volume;
     this.player.play();
   }
@@ -134,11 +135,14 @@ export default class Game {
     this.popupArtist.textContent = correctAnswerObject.author;
     if (e.target.textContent.trim() === correctAnswer) {
       this.popupContent.style.setProperty("border", "0.2rem solid lightgreen");
+      this.dotList[index].style.setProperty("background-color", "#fcad85");
+      this.dotList[index].style.setProperty("border-color", "#fcad85");
     } else {
       this.popupContent.style.setProperty(
         "border",
         "0.2rem solid rgb(253, 110, 110)"
       );
+      this.dotList[index].style.setProperty("background-color", "#7d8e95");
     }
     this.showPopup(roundData, index);
   }
