@@ -9,7 +9,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   visibility: hidden;
-  opacity: 0;
+  // opacity: 0;
 
   &.active {
     visibility: visible;
@@ -74,6 +74,8 @@
     color: #fcad85;
     font-size: 20rem;
     transition: all 0.5s;
+    visibility: hidden;
+    opacity: 0;
 
     &:hover {
       top: 10%;

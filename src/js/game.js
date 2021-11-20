@@ -8,10 +8,19 @@ export default class Game {
       ".questions-artists-question"
     );
     this.dotList = document.querySelectorAll(".dot");
-    // this.artistsImage = document.querySelector(".questions-artists-img");
     this.artistsAnswerList = document.querySelectorAll(".artist-name");
+    this.artistsAnswerBody = document.querySelector(".answers-artists-list");
     this.player = new Audio("../assets/mp3/push.mp3");
     this.categoryPage = document.querySelector(".categories");
+
+    // popup
+    this.popup = document.querySelector(".popup");
+    this.popupImage = document.querySelector(".popup-img");
+    this.popupPicture = document.querySelector(".popup-picture-name");
+    this.popupArtist = document.querySelector(".popup-artist-name");
+    this.popupBtn = document.querySelector(".popup-btn");
+    this.popupContent = document.querySelector(".popup-content");
+
     this.artistsRoundPage = document.querySelector(".questions-artists");
     this.picturesRoundPage;
 
@@ -79,7 +88,9 @@ export default class Game {
       };
       // prepare answer options
       let set = new Set();
-      set.add(roundData[index]["author"]);
+      const correctAnswer = roundData[index]["author"];
+      const correctAnswerObject = roundData[index];
+      set.add(correctAnswer);
       while (set.size < 4) {
         const randomNum = Math.floor(Math.random() * (119 - 0 + 1)) + 0;
         set.add(artistsArray[randomNum].author);
@@ -89,6 +100,21 @@ export default class Game {
       // insert answer options
       Array.from(this.artistsAnswerList).map(
         (item) => (item.textContent = answersArray.pop())
+      );
+      this.artistsAnswerBody.addEventListener(
+        "click",
+        (e) => {
+          this.checkAnswer.call(
+            this,
+            e,
+            correctAnswer,
+            correctAnswerObject,
+            img,
+            roundData,
+            index
+          );
+        },
+        { once: true }
       );
     } else if (settingsData.activeCategory === "pictures") {
     }
@@ -100,5 +126,38 @@ export default class Game {
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+  }
+
+  checkAnswer(e, correctAnswer, correctAnswerObject, img, roundData, index) {
+    this.popupImage.src = img.src;
+    this.popupPicture.textContent = correctAnswerObject.name;
+    this.popupArtist.textContent = correctAnswerObject.author;
+    if (e.target.textContent.trim() === correctAnswer) {
+      this.popupContent.style.setProperty("border", "0.2rem solid lightgreen");
+    } else {
+      this.popupContent.style.setProperty(
+        "border",
+        "0.2rem solid rgb(253, 110, 110)"
+      );
+    }
+    this.showPopup(roundData, index);
+  }
+
+  showPopup(roundData, index) {
+    this.popup.style.setProperty("visibility", "visible");
+    this.popup.style.setProperty("opacity", "1");
+    this.popupBtn.addEventListener(
+      "click",
+      () => {
+        this.hidePopup.call(this);
+        this.handleRound.call(this, roundData, ++index);
+      },
+      { once: true }
+    );
+  }
+
+  hidePopup() {
+    this.popup.style.setProperty("visibility", "hidden");
+    this.popup.style.setProperty("opacity", "0");
   }
 }
