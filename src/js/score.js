@@ -24,20 +24,19 @@ export default class Score {
     const scoreData =
       categoriesData[settingsData.activeCategory][cardNum].pictures;
     settingsData.isScoreOpen = true;
-    const currentArrayData =
+    let currentArrayData =
       settingsData.activeCategory === "artists" ? artistsArray : picturesArray;
-    console.log(scoreData);
+    currentArrayData = currentArrayData.slice(cardNum * 10, cardNum * 10 + 10);
     for (let i = 0; i < scoreData.length; i++) {
       const card = this.cardList[i];
+      this.updateCardDescription(card, currentArrayData, i);
       const title = card.querySelector(".card-title-info");
       const img = card.querySelector("img");
       const score = card.querySelector(".card-title-right-answers");
       title.textContent = settingsData.monthList[cardNum];
       score.textContent = "";
 
-      const newImgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${
-        currentArrayData[cardNum * 10 + i].imageNum
-      }.jpg`;
+      const newImgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${currentArrayData[i].imageNum}.jpg`;
       const newImg = new Image();
       newImg.src = newImgURL;
       newImg.classList.add("card-img");
@@ -55,14 +54,30 @@ export default class Score {
     function showScore() {
       this.categoryPage.style.setProperty("display", "none");
       window.scrollTo(0, 0);
+      this.categoryBtn.textContent = "Категории";
       this.categoryPage.style.setProperty("pointer-events", "initial");
       this.categoryPage.style.setProperty("display", "block");
       setTimeout(() => this.categoryPage.style.setProperty("opacity", "1"), 50);
     }
     this.player.volume = settingsData.volume;
     this.player.play();
+    [this.cardList[10], this.cardList[11]].map((item) => {
+      item.style.setProperty("opacity", 0),
+        setTimeout(() => item.style.setProperty("display", "none"), 200);
+    });
+    Array.from(this.cardList).map((item) =>
+      item.querySelector(".card-score").classList.add("active")
+    );
   }
 
+  updateCardDescription(card, currentArrayData, index) {
+    const pictureName = card.querySelector(".picture-name");
+    const pictureAuthor = card.querySelector(".picture-author");
+    const pictureYear = card.querySelector(".picture-year");
+    pictureName.textContent = currentArrayData[index].name;
+    pictureAuthor.textContent = currentArrayData[index].author;
+    pictureYear.textContent = currentArrayData[index].year;
+  }
   // openMenu() {
   //   this.categoryPage.style.setProperty("pointer-events", "none");
   //   this.categoryPage.style.setProperty("opacity", "0");
@@ -87,9 +102,17 @@ export default class Score {
     this.player.play();
     setTimeout(showCategoryPage.bind(this), 200);
     function showCategoryPage() {
+      this.categoryBtn.textContent = "Настройки";
       this.initialMenu.style.setProperty("pointer-events", "initial");
       this.categoryPage.style.setProperty("opacity", "1");
     }
     settingsData.isScoreOpen = false;
+    [this.cardList[10], this.cardList[11]].map((item) => {
+      item.style.setProperty("opacity", 1),
+        setTimeout(() => item.style.setProperty("display", "block"), 200);
+    });
+    Array.from(this.cardList).map((item) =>
+      item.querySelector(".card-score").classList.remove("active")
+    );
   }
 }

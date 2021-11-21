@@ -35,6 +35,12 @@ export default class Category {
     this.cardList.forEach((item) =>
       item.addEventListener("click", (e) => {
         if (e.target.classList.contains("card-score")) return;
+        if (settingsData.isScoreOpen) {
+          e.currentTarget
+            .querySelector(".card-info")
+            .classList.toggle("active-info");
+          return;
+        }
         this.game.startRound.call(
           this.game,
           Array.from(this.cardList).indexOf(item)

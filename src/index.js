@@ -11,6 +11,7 @@ storage.initCategoryData();
 storage.initSettingsData();
 let settingsData = storage.getSettingData();
 let categoriesData = storage.getCategoriesData();
+settingsData.isScoreOpen = false;
 
 // Menu
 const menu = new Menu();
