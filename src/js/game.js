@@ -8,20 +8,34 @@ import Category from "./category";
 
 export default class Game {
   constructor() {
+    // general
     this.exitBtn = document.querySelector(".questions-btn");
-    this.artistsMainBlock = document.querySelector(".questions-artists-main");
-    this.artistsQuestion = document.querySelector(
-      ".questions-artists-question"
-    );
     this.dotList = document.querySelectorAll(".dot");
-    this.artistsAnswerList = document.querySelectorAll(".artist-name");
-    this.artistsAnswerBody = document.querySelector(".answers-artists-list");
     this.player = new Audio("../assets/mp3/push.mp3");
     this.categoryPage = document.querySelector(".categories");
     this.answersArray = [];
     this.cardNum;
     this.correctAnswers;
-
+    // artists Round
+    this.artistsMainBlock = document.querySelector(".questions-artists-main");
+    this.artistsQuestion = document.querySelector(
+      ".questions-artists-question"
+    );
+    this.artistsAnswerList = document.querySelectorAll(".artist-name");
+    this.artistsAnswerBody = document.querySelector(".answers-artists-list");
+    this.artistsRoundPage = document.querySelector(".questions-artists");
+    // pictures Round
+    this.picturesMainBlock = document.querySelector(".questions-pictures-main");
+    this.picturesQuestion = document.querySelector(
+      ".questions-pictures-question"
+    );
+    this.picturesAnswerList = document.querySelectorAll(
+      ".answers-pictures-img"
+    );
+    this.picturesRoundPage = document.querySelector(".questions-pictures");
+    this.picturesAnswersItems = document.querySelectorAll(
+      ".answers-pictures-item"
+    );
     // popup
     this.popup = document.querySelector(".popup");
     this.popupImage = document.querySelector(".popup-img");
@@ -30,9 +44,6 @@ export default class Game {
     this.popupBtn = document.querySelector(".popup-btn");
     this.popupContent = document.querySelector(".popup-content");
     this.popupScore = document.querySelector(".popup-score");
-
-    this.artistsRoundPage = document.querySelector(".questions-artists");
-    this.picturesRoundPage;
 
     this.exitBtn.addEventListener("click", this.goBack.bind(this));
   }
@@ -137,6 +148,39 @@ export default class Game {
         );
       };
     } else if (settingsData.activeCategory === "pictures") {
+      // write the question
+      this.picturesQuestion.textContent = `Какую из этих картин написал ${roundData[index].author}?`;
+      // prepare answer options
+      let answersArray = [];
+      const correctAnswerObj = roundData[index];
+      answersArray.push(correctAnswerObj);
+      while (answersArray.length < 4) {
+        const randomNum = Math.floor(Math.random() * (119 - 0 + 1)) + 0;
+        const newAnswerOptionObj = picturesArray[randomNum];
+        if (
+          !answersArray.find((item) => item.author == newAnswerOptionObj.author)
+        ) {
+          answersArray.push(newAnswerOptionObj);
+        }
+      }
+      // shuffle answer options
+      answersArray = this.shuffle([...answersArray]);
+      // insert images
+      for (let i = 0; i < this.picturesAnswersItems.length; i++) {
+        const imgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${answersArray[i].imageNum}.jpg`;
+        const img = new Image();
+        img.src = imgURL;
+        img.classList.add("answers-pictures-img");
+        img.onload = () => {
+          // delete previous image
+          this.picturesAnswersItems[i].querySelector("img").remove(),
+            // regulate smooth showing
+            img.style.setProperty("opacity", "0");
+          this.picturesAnswersItems[i].append(img);
+          setTimeout(() => img.style.setProperty("opacity", "1"), 50);
+          // this.artistsAnswerBody.style.setProperty("opacity", "1");
+        };
+      }
     }
   }
 

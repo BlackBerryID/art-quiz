@@ -49,6 +49,7 @@ export default class Category {
       title.textContent = this.monthList[i];
       if (!categoriesData[category][i].hasScore) {
         img.style.setProperty("filter", "grayscale(1)");
+        score.textContent = "";
       } else {
         img.style.setProperty("filter", "grayscale(0)");
         score.textContent = categoriesData[category][i].score;
