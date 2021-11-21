@@ -9,8 +9,8 @@ import Category from "./category";
 export default class Game {
   constructor() {
     // general
-    this.exitBtn = document.querySelector(".questions-btn");
-    this.dotList = document.querySelectorAll(".dot");
+    this.exitBtns = document.querySelectorAll(".questions-btn");
+    this.dotList;
     this.player = new Audio("../assets/mp3/push.mp3");
     this.categoryPage = document.querySelector(".categories");
     this.answersArray = [];
@@ -45,7 +45,9 @@ export default class Game {
     this.popupContent = document.querySelector(".popup-content");
     this.popupScore = document.querySelector(".popup-score");
 
-    this.exitBtn.addEventListener("click", this.goBack.bind(this));
+    this.exitBtns.forEach((item) =>
+      item.addEventListener("click", this.goBack.bind(this))
+    );
   }
 
   goBack() {
@@ -68,11 +70,19 @@ export default class Game {
   }
 
   startRound(cardNum) {
+    // clear and prepare to new round
+    this.dotList =
+      settingsData.activeCategory === "artists"
+        ? document.querySelectorAll(".dot")
+        : document.querySelectorAll(".dot-pictures");
+    this.answersArray = [];
     this.cardNum = cardNum;
     this.dotList.forEach((item) => {
       item.style.setProperty("background", "transparent");
       item.style.setProperty("border-color", "#7d8e95");
     });
+
+    // prepare data to new round
     const roundData =
       settingsData.activeCategory === "artists"
         ? artistsArray.slice(cardNum * 10, cardNum * 10 + 10)
@@ -81,6 +91,7 @@ export default class Game {
       `.questions-${settingsData.activeCategory}`
     );
 
+    // "change" pages
     this.categoryPage.style.setProperty("pointer-events", "none");
     this.categoryPage.style.setProperty("opacity", "0");
     setTimeout(showSettingsPage.bind(this), 200);
@@ -181,6 +192,23 @@ export default class Game {
           // this.artistsAnswerBody.style.setProperty("opacity", "1");
         };
       }
+      this.picturesMainBlock.addEventListener(
+        "click",
+        (e) => {
+          const regEx = new RegExp(correctAnswerObj.imageNum);
+          const isCorrect = regEx.test(e.target.src);
+          this.checkAnswer.call(
+            this,
+            e,
+            isCorrect,
+            correctAnswerObj,
+            `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${correctAnswerObj.imageNum}.jpg`,
+            roundData,
+            index
+          );
+        },
+        { once: true }
+      );
     }
   }
 
@@ -193,10 +221,13 @@ export default class Game {
   }
 
   checkAnswer(e, correctAnswer, correctAnswerObject, img, roundData, index) {
-    this.popupImage.src = img.src;
+    this.popupImage.src = typeof img === "string" ? img : img.src;
     this.popupPicture.textContent = correctAnswerObject.name;
     this.popupArtist.textContent = correctAnswerObject.author;
-    if (e.target.textContent.trim() === correctAnswer) {
+    if (
+      e.target.textContent.trim() === correctAnswer ||
+      correctAnswer === true
+    ) {
       this.popupContent.style.setProperty("border", "0.2rem solid lightgreen");
       this.dotList[index].style.setProperty("background-color", "#fcad85");
       this.dotList[index].style.setProperty("border-color", "#fcad85");
@@ -209,6 +240,8 @@ export default class Game {
       this.dotList[index].style.setProperty("background-color", "#7d8e95");
       this.answersArray.push(false);
     }
+    if (typeof img === "string") img = false;
+    console.log(this.answersArray);
     this.showPopup(roundData, img, index);
   }
 
@@ -232,7 +265,7 @@ export default class Game {
   hidePopup(img) {
     this.popup.style.setProperty("visibility", "hidden");
     this.popup.style.setProperty("opacity", "0");
-    img.style.setProperty("opacity", "0");
+    if (img) img.style.setProperty("opacity", "0");
     this.artistsAnswerBody.style.setProperty("opacity", "0");
     this.player.currentTime = 0;
     this.player.volume = settingsData.volume;
