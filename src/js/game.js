@@ -45,9 +45,9 @@ export default class Game {
     this.popupContent = document.querySelector(".popup-content");
     this.popupScore = document.querySelector(".popup-score");
 
-    this.exitBtns.forEach((item) =>
-      item.addEventListener("click", this.goBack.bind(this))
-    );
+    this.exitBtns.forEach((item) => {
+      item.addEventListener("click", this.goBack.bind(this));
+    });
   }
 
   goBack() {
@@ -142,21 +142,38 @@ export default class Game {
         Array.from(this.artistsAnswerList).map(
           (item) => (item.textContent = answersArray.pop())
         );
+        const handler = (e) => {
+          this.checkAnswer.call(
+            this,
+            e,
+            correctAnswer,
+            correctAnswerObject,
+            img,
+            roundData,
+            index
+          );
+        };
         this.artistsAnswerBody.addEventListener(
           "click",
-          (e) => {
-            this.checkAnswer.call(
-              this,
-              e,
-              correctAnswer,
-              correctAnswerObject,
-              img,
-              roundData,
-              index
-            );
-          },
-          { once: true }
+          (e) => handler.call(this, e),
+          {
+            once: true,
+          }
         );
+        // It is impossible. I can't remove this EventListener. This is the reason that each new round my eventListener do x2 trigger, then x4 etc.
+
+        // this.exitBtns.forEach((item) =>
+        //   item.addEventListener("click", () => {
+        //     this.artistsAnswerBody.removeEventListener(
+        //       "click",
+        //       (e) => {
+        //         handler.call(this, e);
+        //       },
+        //       { once: true }
+        //     );
+        //     console.log("Listener removed");
+        //   })
+        // );
       };
     } else if (settingsData.activeCategory === "pictures") {
       // write the question
@@ -189,7 +206,6 @@ export default class Game {
             img.style.setProperty("opacity", "0");
           this.picturesAnswersItems[i].append(img);
           setTimeout(() => img.style.setProperty("opacity", "1"), 50);
-          // this.artistsAnswerBody.style.setProperty("opacity", "1");
         };
       }
       this.picturesMainBlock.addEventListener(
@@ -241,7 +257,6 @@ export default class Game {
       this.answersArray.push(false);
     }
     if (typeof img === "string") img = false;
-    console.log(this.answersArray);
     this.showPopup(roundData, img, index);
   }
 
@@ -297,7 +312,9 @@ export default class Game {
     this.popupScore.textContent = "";
     this.popupScore.classList.remove("active");
     this.writeAnswersData();
-    this.goBack();
+    // this.goBack();
+    // do this to reset all EventListeners
+    document.location.reload();
   }
 
   writeAnswersData() {
