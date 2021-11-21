@@ -143,6 +143,7 @@ export default class Game {
           (item) => (item.textContent = answersArray.pop())
         );
         const handler = (e) => {
+          console.log("handler");
           this.checkAnswer.call(
             this,
             e,
@@ -153,27 +154,19 @@ export default class Game {
             index
           );
         };
-        this.artistsAnswerBody.addEventListener(
-          "click",
-          (e) => handler.call(this, e),
-          {
-            once: true,
-          }
-        );
-        // It is impossible. I can't remove this EventListener. This is the reason that each new round my eventListener do x2 trigger, then x4 etc.
+        this.artistsAnswerBody.addEventListener("click", handler, {
+          once: true,
+        });
 
-        // this.exitBtns.forEach((item) =>
-        //   item.addEventListener("click", () => {
-        //     this.artistsAnswerBody.removeEventListener(
-        //       "click",
-        //       (e) => {
-        //         handler.call(this, e);
-        //       },
-        //       { once: true }
-        //     );
-        //     console.log("Listener removed");
-        //   })
-        // );
+        this.exitBtns.forEach(
+          (item) =>
+            item.addEventListener("click", () => {
+              this.artistsAnswerBody.removeEventListener("click", handler, {
+                once: true,
+              });
+            }),
+          { once: true }
+        );
       };
     } else if (settingsData.activeCategory === "pictures") {
       // write the question
@@ -312,9 +305,7 @@ export default class Game {
     this.popupScore.textContent = "";
     this.popupScore.classList.remove("active");
     this.writeAnswersData();
-    // this.goBack();
-    // do this to reset all EventListeners
-    document.location.reload();
+    this.goBack();
   }
 
   writeAnswersData() {
