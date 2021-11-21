@@ -1,5 +1,6 @@
 import { settingsData, categoriesData } from "../index";
 import Game from "../js/game";
+import Score from "./score";
 
 export default class Category {
   constructor() {
@@ -9,7 +10,9 @@ export default class Category {
     this.initialMenu = document.querySelector(".initial");
     this.categoryPage = document.querySelector(".categories");
     this.settingsPage = document.querySelector(".settings");
+    this.scoreBtnList = document.querySelectorAll(".card-score");
     this.game = new Game();
+    this.score = new Score();
     this.monthList = [
       "Январь",
       "Февраль",
@@ -24,16 +27,26 @@ export default class Category {
       "Ноябрь",
       "Декабрь",
     ];
+    settingsData.monthList = this.monthList;
     this.player = new Audio("../assets/mp3/push.mp3");
 
     this.menuBtn.addEventListener("click", this.openMenu.bind(this));
     this.settingsBtn.addEventListener("click", this.openSettings.bind(this));
     this.cardList.forEach((item) =>
-      item.addEventListener(
-        "click",
-        this.game.startRound.bind(
+      item.addEventListener("click", (e) => {
+        if (e.target.classList.contains("card-score")) return;
+        this.game.startRound.call(
           this.game,
           Array.from(this.cardList).indexOf(item)
+        );
+      })
+    );
+    this.scoreBtnList.forEach((item) =>
+      item.addEventListener(
+        "click",
+        this.score.openScore.bind(
+          this.score,
+          Array.from(this.scoreBtnList).indexOf(item)
         )
       )
     );
