@@ -36,7 +36,4 @@ game.addEventListeners();
 const category = new Category();
 category.addEventListeners();
 
-// const timer = new Timer();
-// timer.addEventListeners();
-
 export { settingsData, categoriesData, artistsArray, picturesArray };

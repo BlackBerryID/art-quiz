@@ -113,8 +113,8 @@ export default class Game {
   }
 
   handleRound(roundData, index) {
-    // define category
     this.timer.start();
+    // define category
     if (settingsData.activeCategory === "artists") {
       // insert img
       const imgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${roundData[index].imageNum}.jpg`;
