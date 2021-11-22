@@ -246,6 +246,7 @@ export default class Game {
     this.popupImage.src = typeof img === "string" ? img : img.src;
     this.popupPicture.textContent = correctAnswerObject.name;
     this.popupArtist.textContent = correctAnswerObject.author;
+    console.count("checkAnswer");
     if (
       e.target.textContent.trim() === correctAnswer ||
       correctAnswer === true
@@ -254,6 +255,9 @@ export default class Game {
       this.dotList[index].style.setProperty("background-color", "#fcad85");
       this.dotList[index].style.setProperty("border-color", "#fcad85");
       this.answersArray.push(true);
+      this.player.src = "../assets/mp3/trueAnswer.mp3";
+      this.player.volume = settingsData.volume;
+      this.player.play();
     } else {
       this.popupContent.style.setProperty(
         "border",
@@ -261,6 +265,9 @@ export default class Game {
       );
       this.dotList[index].style.setProperty("background-color", "#7d8e95");
       this.answersArray.push(false);
+      this.player.src = "../assets/mp3/falseAnswer.mp3";
+      this.player.volume = settingsData.volume;
+      this.player.play();
     }
     if (typeof img === "string") img = false;
     this.showPopup(roundData, img, index);
@@ -288,9 +295,6 @@ export default class Game {
     this.popup.style.setProperty("opacity", "0");
     if (img) img.style.setProperty("opacity", "0");
     this.artistsAnswerBody.style.setProperty("opacity", "0");
-    this.player.currentTime = 0;
-    this.player.volume = settingsData.volume;
-    this.player.play();
   }
 
   showFinalPopup() {
@@ -303,6 +307,9 @@ export default class Game {
     this.popup.style.setProperty("visibility", "visible");
     this.popup.style.setProperty("opacity", "1");
     this.popupScore.classList.add("active");
+    this.player.src = "../assets/mp3/roundEnd.mp3";
+    this.player.volume = settingsData.volume;
+    this.player.play();
     this.popupBtn.addEventListener(
       "click",
       () => {
@@ -317,6 +324,7 @@ export default class Game {
     this.popup.style.setProperty("opacity", "0");
     this.popupScore.textContent = "";
     this.popupScore.classList.remove("active");
+    this.player.src = "../assets/mp3/push.mp3";
     this.writeAnswersData();
     this.goBack();
   }
