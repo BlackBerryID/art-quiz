@@ -21,7 +21,6 @@ export default class Score {
     this.categoryPage.style.setProperty("opacity", "0");
     const scoreData =
       categoriesData[settingsData.activeCategory][cardNum].pictures;
-    settingsData.isScoreOpen = true;
     let currentArrayData =
       settingsData.activeCategory === "artists" ? artistsArray : picturesArray;
     currentArrayData = currentArrayData.slice(cardNum * 10, cardNum * 10 + 10);
@@ -59,13 +58,7 @@ export default class Score {
     }
     this.player.volume = settingsData.volume;
     this.player.play();
-    [this.cardList[10], this.cardList[11]].map((item) => {
-      item.style.setProperty("opacity", 0),
-        setTimeout(() => item.style.setProperty("display", "none"), 200);
-    });
-    Array.from(this.cardList).map((item) => {
-      item.querySelector(".card-score").classList.add("active");
-    });
+    this.updateScorePage();
   }
 
   updateCardDescription(card, currentArrayData, index) {
@@ -90,22 +83,37 @@ export default class Score {
       this.categoryPage.style.setProperty("pointer-events", "initial");
       this.categoryPage.style.setProperty("opacity", "1");
     }
-    settingsData.isScoreOpen = false;
-    [this.cardList[10], this.cardList[11]].map((item) => {
-      item.style.setProperty("opacity", 1),
-        setTimeout(() => item.style.setProperty("display", "block"), 200);
-    });
-    Array.from(this.cardList).map((item) => {
-      item.querySelector(".card-score").classList.remove("active");
-      setTimeout(() => {
-        item.querySelector(".card-info").style.setProperty("opacity", "0"),
-          item.querySelector(".card-info").classList.remove("active-info");
-      }, 200);
-      setTimeout(
-        () =>
-          item.querySelector(".card-info").style.setProperty("opacity", "1"),
-        1000
-      );
-    });
+    this.updateScorePage();
+  }
+
+  updateScorePage(flag) {
+    if (settingsData.isScoreOpen) {
+      settingsData.isScoreOpen = false;
+      [this.cardList[10], this.cardList[11]].map((item) => {
+        item.style.setProperty("opacity", 1),
+          setTimeout(() => item.style.setProperty("display", "block"), 200);
+      });
+      Array.from(this.cardList).map((item) => {
+        item.querySelector(".card-score").classList.remove("active");
+        setTimeout(() => {
+          item.querySelector(".card-info").style.setProperty("opacity", "0"),
+            item.querySelector(".card-info").classList.remove("active-info");
+        }, 200);
+        setTimeout(
+          () =>
+            item.querySelector(".card-info").style.setProperty("opacity", "1"),
+          1000
+        );
+      });
+    } else if (!settingsData.isScoreOpen && !flag) {
+      settingsData.isScoreOpen = true;
+      [this.cardList[10], this.cardList[11]].map((item) => {
+        item.style.setProperty("opacity", 0),
+          setTimeout(() => item.style.setProperty("display", "none"), 200);
+      });
+      Array.from(this.cardList).map((item) => {
+        item.querySelector(".card-score").classList.add("active");
+      });
+    }
   }
 }

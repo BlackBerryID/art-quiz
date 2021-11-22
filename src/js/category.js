@@ -81,6 +81,7 @@ export default class Category {
   }
 
   openMenu() {
+    this.score.updateScorePage(true);
     this.categoryPage.style.setProperty("pointer-events", "none");
     this.categoryPage.style.setProperty("opacity", "0");
     setTimeout(showMenu.bind(this), 200);
