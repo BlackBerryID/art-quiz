@@ -105,6 +105,7 @@ export default class Score {
           1000
         );
       });
+      setTimeout(() => (this.categoryBtn.textContent = "Настройки"), 200);
     } else if (!settingsData.isScoreOpen && !flag) {
       settingsData.isScoreOpen = true;
       [this.cardList[10], this.cardList[11]].map((item) => {
