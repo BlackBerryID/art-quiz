@@ -133,6 +133,17 @@
       background-size: 100%;
       filter: invert(25%) sepia(17%) saturate(514%) hue-rotate(137deg)
         brightness(96%) contrast(95%);
+      transition: all 1s;
+    }
+
+    &.animate {
+      transform: translateY(0);
+    }
+
+    &.animate::before {
+      filter: invert(41%) sepia(40%) saturate(718%) hue-rotate(292deg)
+        brightness(94%) contrast(92%);
+      transform: translateY(-50%) rotate(-360deg);
     }
   }
 }

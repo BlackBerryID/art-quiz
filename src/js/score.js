@@ -18,47 +18,61 @@ export default class Score {
 
   openScore(cardNum) {
     this.categoryPage.style.setProperty("pointer-events", "none");
-    this.categoryPage.style.setProperty("opacity", "0");
-    const scoreData =
-      categoriesData[settingsData.activeCategory][cardNum].pictures;
-    let currentArrayData =
-      settingsData.activeCategory === "artists" ? artistsArray : picturesArray;
-    currentArrayData = currentArrayData.slice(cardNum * 10, cardNum * 10 + 10);
-    for (let i = 0; i < scoreData.length; i++) {
-      const card = this.cardList[i];
-      this.updateCardDescription(card, currentArrayData, i);
-      const title = card.querySelector(".card-title-info");
-      const img = card.querySelector("img");
-      const score = card.querySelector(".card-title-right-answers");
-      title.textContent = settingsData.monthList[cardNum];
-      score.textContent = "";
+    const targetButton = this.cardList[cardNum].querySelector(".card-score");
+    targetButton.classList.add("animate");
+    setTimeout(() => {
+      this.categoryPage.style.setProperty("opacity", "0");
+      const scoreData =
+        categoriesData[settingsData.activeCategory][cardNum].pictures;
+      let currentArrayData =
+        settingsData.activeCategory === "artists"
+          ? artistsArray
+          : picturesArray;
+      currentArrayData = currentArrayData.slice(
+        cardNum * 10,
+        cardNum * 10 + 10
+      );
+      for (let i = 0; i < scoreData.length; i++) {
+        const card = this.cardList[i];
+        this.updateCardDescription(card, currentArrayData, i);
+        const title = card.querySelector(".card-title-info");
+        const img = card.querySelector("img");
+        const score = card.querySelector(".card-title-right-answers");
+        title.textContent = settingsData.monthList[cardNum];
+        score.textContent = "";
 
-      const newImgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${currentArrayData[i].imageNum}.jpg`;
-      const newImg = new Image();
-      newImg.src = newImgURL;
-      newImg.classList.add("card-img");
-      newImg.onload = () => {
-        img.replaceWith(newImg);
-      };
+        const newImgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${currentArrayData[i].imageNum}.jpg`;
+        const newImg = new Image();
+        newImg.src = newImgURL;
+        newImg.classList.add("card-img");
+        newImg.onload = () => {
+          img.replaceWith(newImg);
+        };
 
-      if (scoreData[i]) {
-        newImg.style.setProperty("filter", "grayscale(0)");
-      } else {
-        newImg.style.setProperty("filter", "grayscale(1)");
+        if (scoreData[i]) {
+          newImg.style.setProperty("filter", "grayscale(0)");
+        } else {
+          newImg.style.setProperty("filter", "grayscale(1)");
+        }
       }
-    }
-    setTimeout(showScore.bind(this), 200);
-    function showScore() {
-      this.categoryPage.style.setProperty("display", "none");
-      window.scrollTo(0, 0);
-      this.categoryBtn.textContent = "Категории";
-      this.categoryPage.style.setProperty("pointer-events", "initial");
-      this.categoryPage.style.setProperty("display", "block");
-      setTimeout(() => this.categoryPage.style.setProperty("opacity", "1"), 50);
-    }
+      setTimeout(showScore.bind(this), 200);
+      function showScore() {
+        targetButton.classList.remove("animate");
+        this.categoryPage.style.setProperty("display", "none");
+        targetButton.style.setProperty("display", "none");
+        window.scrollTo(0, 0);
+        this.categoryBtn.textContent = "Категории";
+        this.categoryPage.style.setProperty("pointer-events", "initial");
+        this.categoryPage.style.setProperty("display", "block");
+        setTimeout(() => {
+          this.categoryPage.style.setProperty("opacity", "1"),
+            targetButton.style.setProperty("display", "block");
+        }, 50);
+      }
+      this.updateScorePage();
+    }, 1000);
     this.player.volume = settingsData.volume;
     this.player.play();
-    this.updateScorePage();
   }
 
   updateCardDescription(card, currentArrayData, index) {
