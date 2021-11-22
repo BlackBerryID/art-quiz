@@ -76,19 +76,6 @@ export default class Score {
     pictureAuthor.textContent = currentArrayData[index].author;
     pictureYear.textContent = currentArrayData[index].year;
   }
-  // openMenu() {
-  //   this.categoryPage.style.setProperty("pointer-events", "none");
-  //   this.categoryPage.style.setProperty("opacity", "0");
-  //   setTimeout(showMenu.bind(this), 200);
-  //   function showMenu() {
-  //     this.categoryPage.style.setProperty("display", "none");
-  //     this.categoryPage.style.setProperty("pointer-events", "initial");
-  //     this.initialMenu.style.setProperty("display", "block");
-  //     setTimeout(() => this.initialMenu.style.setProperty("opacity", "1"), 50);
-  //   }
-  //   this.player.volume = settingsData.volume;
-  //   this.player.play();
-  // }
 
   openCategory() {
     const categoryClass = new Category();
@@ -110,6 +97,15 @@ export default class Score {
     });
     Array.from(this.cardList).map((item) => {
       item.querySelector(".card-score").classList.remove("active");
+      setTimeout(() => {
+        item.querySelector(".card-info").style.setProperty("opacity", "0"),
+          item.querySelector(".card-info").classList.remove("active-info");
+      }, 200);
+      setTimeout(
+        () =>
+          item.querySelector(".card-info").style.setProperty("opacity", "1"),
+        1000
+      );
     });
   }
 }
