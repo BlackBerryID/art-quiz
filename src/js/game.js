@@ -45,6 +45,12 @@ export default class Game {
     this.popupContent = document.querySelector(".popup-content");
     this.popupScore = document.querySelector(".popup-score");
 
+    // this.exitBtns.forEach((item) => {
+    //   item.addEventListener("click", this.goBack.bind(this));
+    // });
+  }
+
+  addEventListeners() {
     this.exitBtns.forEach((item) => {
       item.addEventListener("click", this.goBack.bind(this));
     });

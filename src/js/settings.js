@@ -12,7 +12,9 @@ export default class Settings {
     this.categoryPage = document.querySelector(".categories");
     this.player = new Audio("../assets/mp3/push.mp3");
     this.previousVolume;
+  }
 
+  addEventListeners() {
     this.volumeBar.addEventListener("input", () => {
       this.changeVolume.call(this);
       this.play();

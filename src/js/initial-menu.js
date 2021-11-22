@@ -13,7 +13,9 @@ export default class Menu {
     this.categoryPage = document.querySelector(".categories");
     this.player = new Audio("../assets/mp3/push.mp3");
     this.category = new Category();
+  }
 
+  addEventListeners() {
     this.settingsBtn.addEventListener("click", this.openSettings.bind(this));
     [this.artistsGameBtn, this.picturesGameBtn].forEach((item) =>
       item.addEventListener("click", (e) => this.openCategory.call(this, e))

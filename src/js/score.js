@@ -14,8 +14,6 @@ export default class Score {
     this.initialMenu = document.querySelector(".initial");
     this.categoryPage = document.querySelector(".categories");
     this.player = new Audio("../assets/mp3/push.mp3");
-    // this.menuBtn.addEventListener("click", this.openMenu.bind(this));
-    this.categoryBtn.addEventListener("click", this.openCategory.bind(this));
   }
 
   openScore(cardNum) {
@@ -65,9 +63,9 @@ export default class Score {
       item.style.setProperty("opacity", 0),
         setTimeout(() => item.style.setProperty("display", "none"), 200);
     });
-    Array.from(this.cardList).map((item) =>
-      item.querySelector(".card-score").classList.add("active")
-    );
+    Array.from(this.cardList).map((item) => {
+      item.querySelector(".card-score").classList.add("active");
+    });
   }
 
   updateCardDescription(card, currentArrayData, index) {
@@ -93,17 +91,16 @@ export default class Score {
   // }
 
   openCategory() {
-    if (!settingsData.isScoreOpen) return;
     const categoryClass = new Category();
     this.categoryPage.style.setProperty("pointer-events", "none");
     this.categoryPage.style.setProperty("opacity", "0");
-    categoryClass.show(settingsData.activeCategory);
     this.player.volume = settingsData.volume;
     this.player.play();
     setTimeout(showCategoryPage.bind(this), 200);
     function showCategoryPage() {
+      categoryClass.show(settingsData.activeCategory);
       this.categoryBtn.textContent = "Настройки";
-      this.initialMenu.style.setProperty("pointer-events", "initial");
+      this.categoryPage.style.setProperty("pointer-events", "initial");
       this.categoryPage.style.setProperty("opacity", "1");
     }
     settingsData.isScoreOpen = false;
@@ -111,8 +108,8 @@ export default class Score {
       item.style.setProperty("opacity", 1),
         setTimeout(() => item.style.setProperty("display", "block"), 200);
     });
-    Array.from(this.cardList).map((item) =>
-      item.querySelector(".card-score").classList.remove("active")
-    );
+    Array.from(this.cardList).map((item) => {
+      item.querySelector(".card-score").classList.remove("active");
+    });
   }
 }

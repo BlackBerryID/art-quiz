@@ -29,7 +29,9 @@ export default class Category {
     ];
     settingsData.monthList = this.monthList;
     this.player = new Audio("../assets/mp3/push.mp3");
+  }
 
+  addEventListeners() {
     this.menuBtn.addEventListener("click", this.openMenu.bind(this));
     this.settingsBtn.addEventListener("click", this.openSettings.bind(this));
     this.cardList.forEach((item) =>
@@ -91,6 +93,11 @@ export default class Category {
   }
 
   openSettings() {
+    if (settingsData.isScoreOpen) {
+      this.score.openCategory();
+      return;
+    }
+    console.log("continue");
     this.categoryPage.style.setProperty("pointer-events", "none");
     this.categoryPage.style.setProperty("opacity", "0");
     setTimeout(showMenu.bind(this), 200);
