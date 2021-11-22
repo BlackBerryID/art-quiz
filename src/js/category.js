@@ -71,9 +71,11 @@ export default class Category {
       if (!categoriesData[category][i].hasScore) {
         img.style.setProperty("filter", "grayscale(1)");
         score.textContent = "";
+        this.scoreBtnList[i].classList.add("active");
       } else {
         img.style.setProperty("filter", "grayscale(0)");
         score.textContent = categoriesData[category][i].score;
+        this.scoreBtnList[i].classList.remove("active");
       }
     }
   }
