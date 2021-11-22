@@ -5,7 +5,7 @@ import Storage from "./js/localStorage";
 import GameData from "./js/gameData";
 import Game from "./js/game";
 import Category from "./js/category";
-import Timer from "./js/timer";
+import "./js/console";
 
 // Grab the storage data
 const storage = new Storage();
