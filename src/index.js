@@ -5,6 +5,7 @@ import Storage from "./js/localStorage";
 import GameData from "./js/gameData";
 import Game from "./js/game";
 import Category from "./js/category";
+import Timer from "./js/timer";
 
 // Grab the storage data
 const storage = new Storage();
@@ -34,5 +35,8 @@ game.addEventListeners();
 
 const category = new Category();
 category.addEventListeners();
+
+// const timer = new Timer();
+// timer.addEventListeners();
 
 export { settingsData, categoriesData, artistsArray, picturesArray };

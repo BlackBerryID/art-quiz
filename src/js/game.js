@@ -5,6 +5,7 @@ import {
   picturesArray,
 } from "../index";
 import Category from "./category";
+import Timer from "./timer";
 
 export default class Game {
   constructor() {
@@ -12,6 +13,7 @@ export default class Game {
     this.exitBtns = document.querySelectorAll(".questions-btn");
     this.dotList;
     this.player = new Audio("../assets/mp3/push.mp3");
+    this.timer = new Timer();
     this.categoryPage = document.querySelector(".categories");
     this.answersArray = [];
     this.cardNum;
@@ -69,6 +71,7 @@ export default class Game {
     this.player.currentTime = 0;
     this.player.volume = settingsData.volume;
     this.player.play();
+    this.timer.clearInterval();
   }
 
   startRound(cardNum) {
@@ -111,6 +114,7 @@ export default class Game {
 
   handleRound(roundData, index) {
     // define category
+    this.timer.start();
     if (settingsData.activeCategory === "artists") {
       // insert img
       const imgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${roundData[index].imageNum}.jpg`;
@@ -145,7 +149,7 @@ export default class Game {
           (item) => (item.textContent = answersArray.pop())
         );
         const handler = (e) => {
-          console.log("handler");
+          this.timer.clearInterval();
           this.checkAnswer.call(
             this,
             e,
@@ -204,6 +208,7 @@ export default class Game {
         };
       }
       const handler = (e) => {
+        this.timer.clearInterval();
         const regEx = new RegExp(correctAnswerObj.imageNum);
         const isCorrect = regEx.test(e.target.src);
         this.checkAnswer.call(
