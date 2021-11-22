@@ -44,10 +44,6 @@ export default class Game {
     this.popupBtn = document.querySelector(".popup-btn");
     this.popupContent = document.querySelector(".popup-content");
     this.popupScore = document.querySelector(".popup-score");
-
-    // this.exitBtns.forEach((item) => {
-    //   item.addEventListener("click", this.goBack.bind(this));
-    // });
   }
 
   addEventListeners() {
@@ -207,21 +203,27 @@ export default class Game {
           setTimeout(() => img.style.setProperty("opacity", "1"), 50);
         };
       }
-      this.picturesMainBlock.addEventListener(
-        "click",
-        (e) => {
-          const regEx = new RegExp(correctAnswerObj.imageNum);
-          const isCorrect = regEx.test(e.target.src);
-          this.checkAnswer.call(
-            this,
-            e,
-            isCorrect,
-            correctAnswerObj,
-            `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${correctAnswerObj.imageNum}.jpg`,
-            roundData,
-            index
-          );
-        },
+      const handler = (e) => {
+        const regEx = new RegExp(correctAnswerObj.imageNum);
+        const isCorrect = regEx.test(e.target.src);
+        this.checkAnswer.call(
+          this,
+          e,
+          isCorrect,
+          correctAnswerObj,
+          `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${correctAnswerObj.imageNum}.jpg`,
+          roundData,
+          index
+        );
+      };
+      this.picturesMainBlock.addEventListener("click", handler, { once: true });
+      this.exitBtns.forEach(
+        (item) =>
+          item.addEventListener("click", () => {
+            this.picturesMainBlock.removeEventListener("click", handler, {
+              once: true,
+            });
+          }),
         { once: true }
       );
     }

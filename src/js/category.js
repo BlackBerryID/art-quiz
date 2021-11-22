@@ -97,7 +97,6 @@ export default class Category {
       this.score.openCategory();
       return;
     }
-    console.log("continue");
     this.categoryPage.style.setProperty("pointer-events", "none");
     this.categoryPage.style.setProperty("opacity", "0");
     setTimeout(showMenu.bind(this), 200);
