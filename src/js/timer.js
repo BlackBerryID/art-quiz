@@ -11,11 +11,14 @@ export default class Timer {
   }
 
   start() {
-    if (!settingsData.isTimeGame) return;
     this.currentTimerPanel =
       settingsData.activeCategory === "artists"
         ? this.timerPanelList[0]
         : this.timerPanelList[1];
+    if (!settingsData.isTimeGame) {
+      this.currentTimerPanel.textContent = "";
+      return;
+    }
     let timeAmount = settingsData.timeAmount;
     this.currentTimerPanel.textContent = timeAmount;
     countdown = setInterval(() => {
