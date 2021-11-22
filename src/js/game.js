@@ -106,6 +106,7 @@ export default class Game {
       roundPage.style.setProperty("display", "block");
       setTimeout(() => roundPage.style.setProperty("opacity", "1"), 50);
     }
+    this.player.src = "../assets/mp3/push.mp3";
     this.player.volume = settingsData.volume;
     this.player.play();
 
