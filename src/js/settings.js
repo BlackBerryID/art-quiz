@@ -1,47 +1,47 @@
-import { settingsData } from "../index";
+import { settingsData } from '../index';
 
 export default class Settings {
   constructor() {
-    this.settingsSection = document.querySelector(".settings");
-    this.initialMenu = document.querySelector(".initial");
-    this.volumeBtn = document.querySelector(".volume-icon");
-    this.volumeBar = document.querySelector(".volume-bar");
-    this.timeInput = document.querySelector(".time-amount-input");
-    this.timeGameToggle = document.querySelector(".checkbox");
-    this.backButton = document.querySelector(".settings-btn-back");
-    this.categoryPage = document.querySelector(".categories");
-    this.player = new Audio("../assets/mp3/push.mp3");
+    this.settingsSection = document.querySelector('.settings');
+    this.initialMenu = document.querySelector('.initial');
+    this.volumeBtn = document.querySelector('.volume-icon');
+    this.volumeBar = document.querySelector('.volume-bar');
+    this.timeInput = document.querySelector('.time-amount-input');
+    this.timeGameToggle = document.querySelector('.checkbox');
+    this.backButton = document.querySelector('.settings-btn-back');
+    this.categoryPage = document.querySelector('.categories');
+    this.player = new Audio('../assets/mp3/push.mp3');
     this.previousVolume;
   }
 
   addEventListeners() {
-    this.volumeBar.addEventListener("input", () => {
+    this.volumeBar.addEventListener('input', () => {
       this.changeVolume();
       this.play();
     });
-    this.volumeBtn.addEventListener("click", () => {
+    this.volumeBtn.addEventListener('click', () => {
       this.toggleVolumeButton();
       this.play();
     });
-    this.backButton.addEventListener("click", () => {
+    this.backButton.addEventListener('click', () => {
       this.goBack(settingsData.prevPage);
       this.writeSettingsData();
     });
-    window.addEventListener("beforeunload", () => this.writeSettingsData());
+    window.addEventListener('beforeunload', () => this.writeSettingsData());
   }
 
   goBack(prevPage) {
-    let page = prevPage === "menu" ? this.initialMenu : this.categoryPage;
-    this.settingsSection.classList.add('untouchable')
-    this.settingsSection.classList.add('hide')
+    let page = prevPage === 'menu' ? this.initialMenu : this.categoryPage;
+    this.settingsSection.classList.add('untouchable');
+    this.settingsSection.classList.add('hide');
     setTimeout(() => this.showMenuPage(page), 200);
     this.play();
   }
 
   showMenuPage(page) {
-    this.settingsSection.classList.add('remove')
-    this.settingsSection.classList.remove('untouchable')
-    page.classList.remove('remove')
+    this.settingsSection.classList.add('remove');
+    this.settingsSection.classList.remove('untouchable');
+    page.classList.remove('remove');
     setTimeout(() => page.classList.remove('hide'), 50);
   }
 
@@ -73,11 +73,11 @@ export default class Settings {
 
   toggleVolumeIcon() {
     if (this.player.volume === 0 || this.player.muted) {
-      this.volumeBtn.style.background = "url(./assets/svg/volume-muted.svg)";
-      this.volumeBtn.style.marginTop = "0.15rem";
+      this.volumeBtn.style.background = 'url(./assets/svg/volume-muted.svg)';
+      this.volumeBtn.style.marginTop = '0.15rem';
     } else {
-      this.volumeBtn.style.background = "url(./assets/svg/volume.svg)";
-      this.volumeBtn.style.marginTop = "0";
+      this.volumeBtn.style.background = 'url(./assets/svg/volume.svg)';
+      this.volumeBtn.style.marginTop = '0';
     }
   }
 
@@ -90,7 +90,7 @@ export default class Settings {
     settingsData.isTimeGame = this.timeGameToggle.checked;
     settingsData.timeAmount = this.timeInput.value;
     settingsData.volume = this.player.volume;
-    localStorage.setItem("settingsData", JSON.stringify(settingsData));
+    localStorage.setItem('settingsData', JSON.stringify(settingsData));
   }
 
   loadSettingsData() {

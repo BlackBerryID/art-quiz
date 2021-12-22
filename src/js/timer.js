@@ -1,22 +1,20 @@
-import { settingsData } from "../index";
+import { settingsData } from '../index';
 
 let countdown;
 
 export default class Timer {
   constructor() {
-    this.timerPanelList = document.querySelectorAll(".timer");
+    this.timerPanelList = document.querySelectorAll('.timer');
     this.currentTimerPanel;
-    this.artistsAnswerBody = document.querySelector(".answers-artists-list");
-    this.picturesMainBlock = document.querySelector(".questions-pictures-main");
+    this.artistsAnswerBody = document.querySelector('.answers-artists-list');
+    this.picturesMainBlock = document.querySelector('.questions-pictures-main');
   }
 
   start() {
     this.currentTimerPanel =
-      settingsData.activeCategory === "artists"
-        ? this.timerPanelList[0]
-        : this.timerPanelList[1];
+      settingsData.activeCategory === 'artists' ? this.timerPanelList[0] : this.timerPanelList[1];
     if (!settingsData.isTimeGame) {
-      this.currentTimerPanel.textContent = "";
+      this.currentTimerPanel.textContent = '';
       return;
     }
     let timeAmount = settingsData.timeAmount;
@@ -25,8 +23,8 @@ export default class Timer {
       timeAmount--;
       if (timeAmount === -1) {
         clearInterval(countdown);
-        const event = new Event("click");
-        settingsData.activeCategory === "artists"
+        const event = new Event('click');
+        settingsData.activeCategory === 'artists'
           ? this.artistsAnswerBody.dispatchEvent(event)
           : this.picturesMainBlock.dispatchEvent(event);
         return;

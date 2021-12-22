@@ -1,12 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap');
 
-@import "./general.scss";
-@import "./initial.scss";
-@import "./settings.scss";
-@import "./categories.scss";
-@import "./questions-artists.scss";
-@import "./questions-pictures.scss";
-@import "./popup.scss";
+@import './general.scss';
+@import './initial.scss';
+@import './settings.scss';
+@import './categories.scss';
+@import './questions-artists.scss';
+@import './questions-pictures.scss';
+@import './popup.scss';
 
 .untouchable {
   pointer-events: none;
