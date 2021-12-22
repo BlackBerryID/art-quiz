@@ -3,6 +3,8 @@ import Game from "../js/game";
 import Score from "./score";
 
 export default class Category {
+  static monthList
+
   constructor() {
     this.menuBtn = document.querySelector(".menuBtn");
     this.settingsBtn = document.querySelector(".settingsBtn");
@@ -13,7 +15,7 @@ export default class Category {
     this.scoreBtnList = document.querySelectorAll(".card-score");
     this.game = new Game();
     this.score = new Score();
-    this.monthList = [
+    Category.monthList = [
       "Январь",
       "Февраль",
       "Март",
@@ -27,7 +29,7 @@ export default class Category {
       "Ноябрь",
       "Декабрь",
     ];
-    settingsData.monthList = this.monthList;
+    settingsData.monthList = Category.monthList;
     this.player = new Audio("../assets/mp3/push.mp3");
   }
 
@@ -64,7 +66,7 @@ export default class Category {
       const img = card.querySelector("img");
       const score = card.querySelector(".card-title-right-answers");
       img.src = `../assets/jpg/${category}/${i + 1}.jpg`;
-      title.textContent = this.monthList[i];
+      title.textContent = Category.monthList[i];
       if (!categoriesData[category][i].hasScore) {
         img.style.setProperty("filter", "grayscale(1)");
         score.textContent = "";
