@@ -70,11 +70,11 @@ export default class Category {
       img.src = `../assets/jpg/${category}/${index + 1}.jpg`;
       title.textContent = Category.monthList[index];
       if (!item.hasScore) {
-        img.style.setProperty("filter", "grayscale(1)");
+        img.classList.add('gray')
         score.textContent = "";
         this.scoreBtnList[index].classList.add("active");
       } else {
-        img.style.setProperty("filter", "grayscale(0)");
+        img.classList.remove('gray')
         score.textContent = item.score;
         this.scoreBtnList[index].classList.remove("active");
       }
@@ -83,14 +83,13 @@ export default class Category {
 
   openMenu() {
     this.score.updateScorePage(true);
-    this.categoryPage.style.setProperty("pointer-events", "none");
-    this.categoryPage.style.setProperty("opacity", "0");
+    this.categoryPage.classList.add('untouchable', 'hide')
     setTimeout(showMenu.bind(this), 200);
     function showMenu() {
-      this.categoryPage.style.setProperty("display", "none");
-      this.categoryPage.style.setProperty("pointer-events", "initial");
-      this.initialMenu.style.setProperty("display", "block");
-      setTimeout(() => this.initialMenu.style.setProperty("opacity", "1"), 50);
+      this.categoryPage.classList.add('remove')
+      this.categoryPage.classList.remove('untouchable')
+      this.initialMenu.classList.remove('remove')
+      setTimeout(() => this.initialMenu.classList.remove('hide'), 50);
     }
     this.player.volume = settingsData.volume;
     this.player.play();
@@ -101,14 +100,14 @@ export default class Category {
       this.score.openCategory();
       return;
     }
-    this.categoryPage.style.setProperty("pointer-events", "none");
-    this.categoryPage.style.setProperty("opacity", "0");
+    this.categoryPage.classList.add('untouchable')
+    this.categoryPage.classList.add('hide')
     setTimeout(showMenu.bind(this), 200);
     function showMenu() {
-      this.categoryPage.style.setProperty("display", "none");
-      this.categoryPage.style.setProperty("pointer-events", "initial");
-      this.settingsPage.style.setProperty("display", "block");
-      setTimeout(() => this.settingsPage.style.setProperty("opacity", "1"), 50);
+      this.categoryPage.classList.add('remove')
+      this.categoryPage.classList.remove('untouchable')
+      this.settingsPage.classList.remove('remove')
+      setTimeout(() => this.settingsPage.classList.remove('hide'), 50);
     }
     settingsData.prevPage = "category";
     this.player.volume = settingsData.volume;

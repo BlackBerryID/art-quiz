@@ -17,11 +17,11 @@ export default class Score {
   }
 
   openScore(cardNum) {
-    this.categoryPage.style.setProperty("pointer-events", "none");
+    this.categoryPage.classList.add('untouchable')
     const targetButton = this.cardList[cardNum].querySelector(".card-score");
     targetButton.classList.add("animate");
     setTimeout(() => {
-      this.categoryPage.style.setProperty("opacity", "0");
+      this.categoryPage.classList.add('hide')
       const scoreData =
         categoriesData[settingsData.activeCategory][cardNum].pictures;
       let currentArrayData =
@@ -50,23 +50,23 @@ export default class Score {
         };
 
         if (item) {
-          newImg.style.setProperty("filter", "grayscale(0)");
+          newImg.classList.remove('gray')
         } else {
-          newImg.style.setProperty("filter", "grayscale(1)");
+          newImg.classList.add('gray')
         }
       })
       setTimeout(showScore.bind(this), 200);
       function showScore() {
         targetButton.classList.remove("animate");
-        this.categoryPage.style.setProperty("display", "none");
-        targetButton.style.setProperty("display", "none");
+        this.categoryPage.classList.add('remove')
+        targetButton.classList.add('remove')
         window.scrollTo(0, 0);
         this.categoryBtn.textContent = "Категории";
-        this.categoryPage.style.setProperty("pointer-events", "initial");
-        this.categoryPage.style.setProperty("display", "block");
+        this.categoryPage.classList.remove('untouchable')
+        this.categoryPage.classList.remove('remove')
         setTimeout(() => {
-          this.categoryPage.style.setProperty("opacity", "1"),
-            targetButton.style.setProperty("display", "block");
+          this.categoryPage.classList.remove('hide')
+            targetButton.classList.remove('remove')
         }, 50);
       }
       this.updateScorePage();
@@ -86,16 +86,16 @@ export default class Score {
 
   openCategory() {
     const categoryClass = new Category();
-    this.categoryPage.style.setProperty("pointer-events", "none");
-    this.categoryPage.style.setProperty("opacity", "0");
+    this.categoryPage.classList.add('untouchable')
+    this.categoryPage.classList.add('hide')
     this.player.volume = settingsData.volume;
     this.player.play();
     setTimeout(showCategoryPage.bind(this), 200);
     function showCategoryPage() {
       categoryClass.show(settingsData.activeCategory);
       this.categoryBtn.textContent = "Настройки";
-      this.categoryPage.style.setProperty("pointer-events", "initial");
-      this.categoryPage.style.setProperty("opacity", "1");
+      this.categoryPage.classList.remove('untouchable')
+      this.categoryPage.classList.remove('hide')
     }
     this.updateScorePage();
   }
@@ -104,18 +104,18 @@ export default class Score {
     if (settingsData.isScoreOpen) {
       settingsData.isScoreOpen = false;
       [this.cardList[10], this.cardList[11]].map((item) => {
-        item.style.setProperty("opacity", 1),
-          setTimeout(() => item.style.setProperty("display", "block"), 200);
+        item.classList.remove('hide')
+          setTimeout(() => item.classList.remove('remove'), 200);
       });
       Array.from(this.cardList).map((item) => {
         item.querySelector(".card-score").classList.remove("active");
         setTimeout(() => {
-          item.querySelector(".card-info").style.setProperty("opacity", "0"),
+          item.querySelector(".card-info").classList.add('hide'),
             item.querySelector(".card-info").classList.remove("active-info");
         }, 200);
         setTimeout(
           () =>
-            item.querySelector(".card-info").style.setProperty("opacity", "1"),
+            item.querySelector(".card-info").classList.remove('hide'),
           1000
         );
       });
@@ -123,8 +123,8 @@ export default class Score {
     } else if (!settingsData.isScoreOpen && !flag) {
       settingsData.isScoreOpen = true;
       [this.cardList[10], this.cardList[11]].map((item) => {
-        item.style.setProperty("opacity", 0),
-          setTimeout(() => item.style.setProperty("display", "none"), 200);
+        item.classList.add('hide'),
+          setTimeout(() => item.classList.add('remove'), 200);
       });
       Array.from(this.cardList).map((item) => {
         item.querySelector(".card-score").classList.add("active");

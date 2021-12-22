@@ -32,14 +32,14 @@ export default class Settings {
 
   goBack(prevPage) {
     let page = prevPage === "menu" ? this.initialMenu : this.categoryPage;
-    this.settingsSection.style.setProperty("pointer-events", "none");
-    this.settingsSection.style.setProperty("opacity", "0");
+    this.settingsSection.classList.add('untouchable')
+    this.settingsSection.classList.add('hide')
     setTimeout(showMenuPage.bind(this), 200);
     function showMenuPage() {
-      this.settingsSection.style.setProperty("display", "none");
-      this.settingsSection.style.setProperty("pointer-events", "initial");
-      page.style.setProperty("display", "block");
-      setTimeout(() => page.style.setProperty("opacity", "1"), 50);
+      this.settingsSection.classList.add('remove')
+      this.settingsSection.classList.remove('untouchable')
+      page.classList.remove('remove')
+      setTimeout(() => page.classList.remove('hide'), 50);
     }
     this.play();
   }

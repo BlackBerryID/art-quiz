@@ -59,14 +59,14 @@ export default class Game {
       settingsData.activeCategory === "artists"
         ? this.artistsRoundPage
         : this.picturesRoundPage;
-    currentPage.style.setProperty("pointer-events", "none");
-    currentPage.style.setProperty("opacity", "0");
+    currentPage.classList.add('untouchable')
+    currentPage.classList.add('hide')
     setTimeout(showSettingsPage.bind(this), 200);
     function showSettingsPage() {
-      currentPage.style.setProperty("display", "none");
-      currentPage.style.setProperty("pointer-events", "initial");
-      this.categoryPage.style.setProperty("display", "block");
-      setTimeout(() => this.categoryPage.style.setProperty("opacity", "1"), 50);
+      currentPage.classList.add('remove')
+      currentPage.classList.remove('untouchable')
+      this.categoryPage.classList.remove('remove')
+      setTimeout(() => this.categoryPage.classList.remove('hide'), 50);
     }
     this.player.currentTime = 0;
     this.player.volume = settingsData.volume;
@@ -83,8 +83,7 @@ export default class Game {
     this.answersArray = [];
     this.cardNum = cardNum;
     this.dotList.forEach((item) => {
-      item.style.setProperty("background", "transparent");
-      item.style.setProperty("border-color", "#7d8e95");
+      item.classList.remove('dot-right-answer', 'dot-wrong-answer')
     });
 
     // prepare data to new round
@@ -97,14 +96,14 @@ export default class Game {
     );
 
     // "change" pages
-    this.categoryPage.style.setProperty("pointer-events", "none");
-    this.categoryPage.style.setProperty("opacity", "0");
+    this.categoryPage.classList.add('untouchable')
+    this.categoryPage.classList.add('hide')
     setTimeout(showSettingsPage.bind(this), 200);
     function showSettingsPage() {
-      this.categoryPage.style.setProperty("display", "none");
-      this.categoryPage.style.setProperty("pointer-events", "initial");
-      roundPage.style.setProperty("display", "block");
-      setTimeout(() => roundPage.style.setProperty("opacity", "1"), 50);
+      this.categoryPage.classList.add('remove')
+      this.categoryPage.classList.remove('untouchable')
+      roundPage.classList.remove('remove')
+      setTimeout(() => roundPage.classList.remove('hide'), 50);
     }
     this.player.src = "../assets/mp3/push.mp3";
     this.player.volume = settingsData.volume;
@@ -128,10 +127,10 @@ export default class Game {
           .querySelectorAll("img")
           .forEach((item) => item.remove());
         // regulate smooth showing
-        img.style.setProperty("opacity", "0");
+        img.classList.add('hide');
         this.artistsMainBlock.append(img);
-        setTimeout(() => img.style.setProperty("opacity", "1"), 50);
-        this.artistsAnswerBody.style.setProperty("opacity", "1");
+        setTimeout(() => img.classList.remove('hide'), 50);
+        this.artistsAnswerBody.classList.remove('hide');
         // write the question
         this.artistsQuestion.textContent = "Кто автор этой картины?";
         // prepare answer options
@@ -202,9 +201,9 @@ export default class Game {
           // delete previous image
           item.querySelector("img").remove(),
             // regulate smooth showing
-            img.style.setProperty("opacity", "0");
+            img.classList.add('hide')
             item.append(img);
-          setTimeout(() => img.style.setProperty("opacity", "1"), 50);
+          setTimeout(() => img.classList.remove('hide'), 50);
         };
       })
       const handler = (e) => {
@@ -250,19 +249,17 @@ export default class Game {
       e.target.textContent.trim() === correctAnswer ||
       correctAnswer === true
     ) {
-      this.popupContent.style.setProperty("border", "0.2rem solid lightgreen");
-      this.dotList[index].style.setProperty("background-color", "#fcad85");
-      this.dotList[index].style.setProperty("border-color", "#fcad85");
+      this.popupContent.classList.remove('popup-wrong-answer')
+      this.popupContent.classList.add('popup-right-answer')
+      this.dotList[index].classList.add('dot-right-answer')
       this.answersArray.push(true);
       this.player.src = "../assets/mp3/trueAnswer.mp3";
       this.player.volume = settingsData.volume;
       this.player.play();
     } else {
-      this.popupContent.style.setProperty(
-        "border",
-        "0.2rem solid rgb(253, 110, 110)"
-      );
-      this.dotList[index].style.setProperty("background-color", "#7d8e95");
+      this.popupContent.classList.remove('popup-right-answer')
+      this.popupContent.classList.add('popup-wrong-answer')
+      this.dotList[index].classList.add('dot-wrong-answer')
       this.answersArray.push(false);
       this.player.src = "../assets/mp3/falseAnswer.mp3";
       this.player.volume = settingsData.volume;
@@ -273,8 +270,8 @@ export default class Game {
   }
 
   showPopup(roundData, img, index) {
-    this.popup.style.setProperty("visibility", "visible");
-    this.popup.style.setProperty("opacity", "1");
+    this.popup.classList.remove('hidden')
+    this.popup.classList.remove('hide')
     this.popupBtn.addEventListener(
       "click",
       () => {
@@ -290,10 +287,10 @@ export default class Game {
   }
 
   hidePopup(img) {
-    this.popup.style.setProperty("visibility", "hidden");
-    this.popup.style.setProperty("opacity", "0");
-    if (img) img.style.setProperty("opacity", "0");
-    this.artistsAnswerBody.style.setProperty("opacity", "0");
+    this.popup.classList.add('hidden')
+    this.popup.classList.add('hide')
+    if (img) img.classList.remove('hide')
+    this.artistsAnswerBody.classList.remove('hide')
   }
 
   showFinalPopup() {
@@ -331,9 +328,9 @@ export default class Game {
     this.popupPicture.textContent = result;
     this.popupScore.textContent =
       this.correctAnswers === 10 ? "M" : this.correctAnswers;
-    this.popupContent.style.setProperty("border", "0.2rem solid #fcad85");
-    this.popup.style.setProperty("visibility", "visible");
-    this.popup.style.setProperty("opacity", "1");
+    this.popupContent.classList.add('final-popup')
+    this.popup.classList.remove('hidden')
+    this.popup.classList.remove('hide')
     this.popupScore.classList.add("active");
     this.player.src = "../assets/mp3/roundEnd.mp3";
     this.player.volume = settingsData.volume;
@@ -348,8 +345,9 @@ export default class Game {
   }
 
   hideFinalPopup() {
-    this.popup.style.setProperty("visibility", "hidden");
-    this.popup.style.setProperty("opacity", "0");
+    this.popup.classList.add('hidden')
+    this.popup.classList.add('hide')
+    this.popup.classList.remove('final-popup')
     this.popupScore.textContent = "";
     this.popupScore.classList.remove("active");
     this.player.src = "../assets/mp3/push.mp3";

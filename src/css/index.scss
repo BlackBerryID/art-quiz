@@ -7,3 +7,60 @@
 @import "./questions-artists.scss";
 @import "./questions-pictures.scss";
 @import "./popup.scss";
+
+.untouchable {
+  pointer-events: none;
+}
+
+.moveDown {
+  transform: translateY(50%);
+}
+
+.moveUp {
+  transform: translateY(-50%);
+}
+
+.scale {
+  transform: scale(0.1);
+}
+
+.hide {
+  opacity: 0;
+}
+
+.remove {
+  display: none;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.dot-transparent-bg {
+  background: transparent;
+}
+
+.dot-right-answer {
+  background-color: #fcad85;
+  border-color: #fcad85;
+}
+
+.dot-wrong-answer {
+  background-color: #7d8e95;
+}
+
+.popup-right-answer {
+  border: 0.2rem solid lightgreen;
+}
+
+.popup-wrong-answer {
+  border: 0.2rem solid rgb(253, 110, 110);
+}
+
+.final-popup {
+  border: 0.2rem solid #fcad85;
+}
+
+.gray {
+  filter: grayscale(1);
+}

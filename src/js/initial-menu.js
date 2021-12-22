@@ -27,17 +27,17 @@ export default class Menu {
       ? "artists"
       : "pictures";
     this.animateOpening(targetCategory);
-    this.initialMenu.style.setProperty("pointer-events", "none");
+    this.initialMenu.classList.add('untouchable')
     setTimeout(() => {
-      this.initialMenu.style.setProperty("opacity", "0");
+      this.initialMenu.classList.add('hide')
       setTimeout(showCategoryPage.bind(this), 200);
       function showCategoryPage() {
-        this.initialMenu.style.setProperty("display", "none");
-        this.initialMenu.style.setProperty("pointer-events", "initial");
-        this.categoryPage.style.setProperty("display", "block");
+        this.initialMenu.classList.add('remove')
+        this.initialMenu.classList.remove('untouchable')
+        this.categoryPage.classList.remove('remove')
         this.restoreMenuAppearance(targetCategory);
         setTimeout(
-          () => this.categoryPage.style.setProperty("opacity", "1"),
+          () => this.categoryPage.classList.remove('hide'),
           50
         );
       }
@@ -55,37 +55,37 @@ export default class Menu {
 
   animateOpening(category) {
     if (category === "artists") {
-      this.artistsGameBtn.style.setProperty("transform", "translateY(50%)");
-      this.picturesGameBtn.style.setProperty("transform", "scale(0.1)");
-      this.picturesGameBtn.style.setProperty("opacity", "0");
+      this.artistsGameBtn.classList.add('moveDown')
+      this.picturesGameBtn.classList.add('scale')
+      this.picturesGameBtn.classList.add('hide')
     } else if (category === "pictures") {
-      this.picturesGameBtn.style.setProperty("transform", "translateY(-50%)");
-      this.artistsGameBtn.style.setProperty("transform", "scale(0.1)");
-      this.artistsGameBtn.style.setProperty("opacity", "0");
+      this.picturesGameBtn.classList.add('moveUp')
+      this.artistsGameBtn.classList.add('scale')
+      this.artistsGameBtn.classList.add('hide')
     }
   }
 
   restoreMenuAppearance(category) {
     if (category === "artists") {
-      this.artistsGameBtn.style.setProperty("transform", "translateY(0)");
-      this.picturesGameBtn.style.setProperty("transform", "scale(1)");
-      this.picturesGameBtn.style.setProperty("opacity", "1");
+      this.artistsGameBtn.classList.remove('moveDown')
+      this.picturesGameBtn.classList.remove('scale')
+      this.picturesGameBtn.classList.remove('hide')
     } else if (category === "pictures") {
-      this.picturesGameBtn.style.setProperty("transform", "translateY(0)");
-      this.artistsGameBtn.style.setProperty("transform", "scale(1)");
-      this.artistsGameBtn.style.setProperty("opacity", "1");
+      this.picturesGameBtn.classList.remove('moveUp')
+      this.artistsGameBtn.classList.remove('scale')
+      this.artistsGameBtn.classList.remove('hide')
     }
   }
 
   openSettings() {
-    this.initialMenu.style.setProperty("pointer-events", "none");
-    this.initialMenu.style.setProperty("opacity", "0");
+    this.initialMenu.classList.add('untouchable')
+    this.initialMenu.classList.add('hide')
     setTimeout(showSettingsPage.bind(this), 200);
     function showSettingsPage() {
-      this.initialMenu.style.setProperty("display", "none");
-      this.initialMenu.style.setProperty("pointer-events", "initial");
-      this.settingsPage.style.setProperty("display", "block");
-      setTimeout(() => this.settingsPage.style.setProperty("opacity", "1"), 50);
+      this.initialMenu.classList.add('remove')
+      this.initialMenu.classList.remove('untouchable')
+      this.settingsPage.classList.remove('remove')
+      setTimeout(() => this.settingsPage.classList.remove('hide'), 50);
     }
     settingsData.prevPage = "menu";
     this.player.volume = settingsData.volume;
