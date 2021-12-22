@@ -1,12 +1,15 @@
 export default class Storage {
   initCategoryData() {
     if (!localStorage.getItem("categoriesData")) {
-      let categoryData = {};
-      categoryData.artists = categoryData.pictures = Array(12).fill({
+      const propertyTemplate = Array(12).fill({
         hasScore: false,
         score: 0,
         pictures: Array(12).fill(false),
-      });
+      })
+      const categoryData = {
+      artists: propertyTemplate,
+      pictures: propertyTemplate,
+      }
       localStorage.setItem("categoriesData", JSON.stringify(categoryData));
     }
   }
