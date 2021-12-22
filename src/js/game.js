@@ -111,12 +111,8 @@ export default class Game {
     setTimeout(() => pageForShow.classList.remove('hide'), 50);
   }
 
-  handleRound(roundData, index) {
-    this.timer.start();
-    // define category
-    if (settingsData.activeCategory === "artists") {
-      // insert img
-      const imgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${roundData[index].imageNum}.jpg`;
+  addImageArtistsCategory(roundData, index) {
+    const imgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${roundData[index].imageNum}.jpg`;
       const img = new Image();
       img.src = imgURL;
       img.classList.add("questions-artists-img");
@@ -130,6 +126,33 @@ export default class Game {
         this.artistsMainBlock.append(img);
         setTimeout(() => img.classList.remove('hide'), 50);
         this.artistsAnswerBody.classList.remove('hide');
+        
+  }
+        return img;
+}
+
+  addImagePicturesCategory(answersArray) {
+    this.picturesAnswersItems.forEach((item, index) => {
+      const imgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${answersArray[index].imageNum}.jpg`;
+      const img = new Image();
+      img.src = imgURL;
+      img.classList.add("answers-pictures-img");
+      img.onload = () => {
+        // delete previous image
+        item.querySelector("img").remove(),
+          // regulate smooth showing
+          img.classList.add('hide')
+          item.append(img);
+        setTimeout(() => img.classList.remove('hide'), 50);
+      };
+    })
+  }
+
+  async handleRound(roundData, index) {
+    this.timer.start();
+    // define category
+    if (settingsData.activeCategory === "artists") {
+      const img = await this.addImageArtistsCategory(roundData, index)
         // write the question
         this.artistsQuestion.textContent = "Кто автор этой картины?";
         // prepare answer options
@@ -167,7 +190,6 @@ export default class Game {
         this.artistsAnswerBody.addEventListener("click", handler, {
           once: true,
         });
-
         this.exitBtns.forEach(
           (item) =>
             item.addEventListener("click", () => {
@@ -177,7 +199,6 @@ export default class Game {
             }),
           { once: true }
         );
-      };
     } else if (settingsData.activeCategory === "pictures") {
       // write the question
       this.picturesQuestion.textContent = `Какую из этих картин написал ${roundData[index].author}?`;
@@ -196,21 +217,7 @@ export default class Game {
       }
       // shuffle answer options
       answersArray = this.shuffle([...answersArray]);
-      // insert images
-      this.picturesAnswersItems.forEach((item, index) => {
-        const imgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${answersArray[index].imageNum}.jpg`;
-        const img = new Image();
-        img.src = imgURL;
-        img.classList.add("answers-pictures-img");
-        img.onload = () => {
-          // delete previous image
-          item.querySelector("img").remove(),
-            // regulate smooth showing
-            img.classList.add('hide')
-            item.append(img);
-          setTimeout(() => img.classList.remove('hide'), 50);
-        };
-      })
+      this.addImagePicturesCategory(answersArray);
       const handler = (e) => {
         this.timer.clearInterval();
         const regEx = new RegExp(correctAnswerObj.imageNum);
