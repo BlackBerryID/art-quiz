@@ -32,16 +32,16 @@ export default class Score {
         cardNum * 10,
         cardNum * 10 + 10
       );
-      for (let i = 0; i < scoreData.length; i++) {
-        const card = this.cardList[i];
-        this.updateCardDescription(card, currentArrayData, i);
+      scoreData.forEach((item, index) => {
+        const card = this.cardList[index];
+        this.updateCardDescription(card, currentArrayData, index);
         const title = card.querySelector(".card-title-info");
         const img = card.querySelector("img");
         const score = card.querySelector(".card-title-right-answers");
         title.textContent = settingsData.monthList[cardNum];
         score.textContent = "";
 
-        const newImgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${currentArrayData[i].imageNum}.jpg`;
+        const newImgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${currentArrayData[index].imageNum}.jpg`;
         const newImg = new Image();
         newImg.src = newImgURL;
         newImg.classList.add("card-img");
@@ -49,12 +49,12 @@ export default class Score {
           img.replaceWith(newImg);
         };
 
-        if (scoreData[i]) {
+        if (item) {
           newImg.style.setProperty("filter", "grayscale(0)");
         } else {
           newImg.style.setProperty("filter", "grayscale(1)");
         }
-      }
+      })
       setTimeout(showScore.bind(this), 200);
       function showScore() {
         targetButton.classList.remove("animate");

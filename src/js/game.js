@@ -193,20 +193,20 @@ export default class Game {
       // shuffle answer options
       answersArray = this.shuffle([...answersArray]);
       // insert images
-      for (let i = 0; i < this.picturesAnswersItems.length; i++) {
-        const imgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${answersArray[i].imageNum}.jpg`;
+      this.picturesAnswersItems.forEach((item, index) => {
+        const imgURL = `https://raw.githubusercontent.com/BlackBerryID/image-data/master/img/${answersArray[index].imageNum}.jpg`;
         const img = new Image();
         img.src = imgURL;
         img.classList.add("answers-pictures-img");
         img.onload = () => {
           // delete previous image
-          this.picturesAnswersItems[i].querySelector("img").remove(),
+          item.querySelector("img").remove(),
             // regulate smooth showing
             img.style.setProperty("opacity", "0");
-          this.picturesAnswersItems[i].append(img);
+            item.append(img);
           setTimeout(() => img.style.setProperty("opacity", "1"), 50);
         };
-      }
+      })
       const handler = (e) => {
         this.timer.clearInterval();
         const regEx = new RegExp(correctAnswerObj.imageNum);

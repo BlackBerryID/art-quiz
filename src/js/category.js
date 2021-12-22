@@ -62,23 +62,23 @@ export default class Category {
   }
 
   show(category) {
-    for (let i = 0; i < categoriesData[category].length; i++) {
-      const card = this.cardList[i];
+    categoriesData[category].forEach((item, index) => {
+      const card = this.cardList[index];
       const title = card.querySelector(".card-title-info");
       const img = card.querySelector("img");
       const score = card.querySelector(".card-title-right-answers");
-      img.src = `../assets/jpg/${category}/${i + 1}.jpg`;
-      title.textContent = Category.monthList[i];
-      if (!categoriesData[category][i].hasScore) {
+      img.src = `../assets/jpg/${category}/${index + 1}.jpg`;
+      title.textContent = Category.monthList[index];
+      if (!item.hasScore) {
         img.style.setProperty("filter", "grayscale(1)");
         score.textContent = "";
-        this.scoreBtnList[i].classList.add("active");
+        this.scoreBtnList[index].classList.add("active");
       } else {
         img.style.setProperty("filter", "grayscale(0)");
-        score.textContent = categoriesData[category][i].score;
-        this.scoreBtnList[i].classList.remove("active");
+        score.textContent = item.score;
+        this.scoreBtnList[index].classList.remove("active");
       }
-    }
+    })
   }
 
   openMenu() {
