@@ -81,10 +81,12 @@ export default class Game {
     });
 
     // prepare data to new round
+    const cardsPerGameRound = 10;
+    const positionOfFirstCard = cardNum * cardsPerGameRound;
     const roundData =
       settingsData.activeCategory === "artists"
-        ? artistsArray.slice(cardNum * 10, cardNum * 10 + 10)
-        : picturesArray.slice(cardNum * 10, cardNum * 10 + 10);
+        ? artistsArray.slice(positionOfFirstCard, positionOfFirstCard + cardsPerGameRound)
+        : picturesArray.slice(positionOfFirstCard, positionOfFirstCard + cardsPerGameRound);
     const roundPage = document.querySelector(
       `.questions-${settingsData.activeCategory}`
     );
@@ -131,16 +133,22 @@ export default class Game {
         // write the question
         this.artistsQuestion.textContent = "Кто автор этой картины?";
         // prepare answer options
-        const set = new Set();
+        const answersCollection = new Set();
         const correctAnswer = roundData[index]["author"];
         const correctAnswerObject = roundData[index];
-        set.add(correctAnswer);
-        while (set.size < 4) {
-          const randomNum = Math.floor(Math.random() * (119 - 0 + 1)) + 0;
-          set.add(artistsArray[randomNum].author);
+        answersCollection.add(correctAnswer);
+        function addRandomAnswers() {
+          const firstIndexOfDataArray = 0;
+          const lastIndexOfDataArray = artistsArray.length - 1;
+
+          while (answersCollection.size < 4) {
+            const randomNum = Math.floor(Math.random() * (lastIndexOfDataArray - (firstIndexOfDataArray + 1))) + firstIndexOfDataArray;
+            answersCollection.add(artistsArray[randomNum].author);
+          }
         }
+        addRandomAnswers()
         // shuffle answer options
-        const answersArray = this.shuffle([...set]);
+        const answersArray = this.shuffle([...answersCollection]);
         // insert answer options
         Array.from(this.artistsAnswerList).map(
           (item) => (item.textContent = answersArray.pop())
@@ -241,7 +249,6 @@ export default class Game {
     this.popupImage.src = typeof img === "string" ? img : img.src;
     this.popupPicture.textContent = correctAnswerObject.name;
     this.popupArtist.textContent = correctAnswerObject.author;
-    console.count("checkAnswer");
     if (
       e.target.textContent.trim() === correctAnswer ||
       correctAnswer === true

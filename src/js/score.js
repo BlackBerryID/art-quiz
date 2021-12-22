@@ -28,9 +28,11 @@ export default class Score {
         settingsData.activeCategory === "artists"
           ? artistsArray
           : picturesArray;
+      const cardsPerGameRound = 10;
+      const positionOfFirstCard = cardNum * cardsPerGameRound;
       currentArrayData = currentArrayData.slice(
-        cardNum * 10,
-        cardNum * 10 + 10
+        positionOfFirstCard,
+        positionOfFirstCard + cardsPerGameRound
       );
       scoreData.forEach((item, index) => {
         const card = this.cardList[index];
@@ -48,7 +50,6 @@ export default class Score {
         newImg.onload = () => {
           img.replaceWith(newImg);
         };
-
         if (item) {
           newImg.classList.remove('gray')
         } else {
