@@ -8,6 +8,7 @@ export default class Category {
   constructor() {
     this.menuBtn = document.querySelector(".menuBtn");
     this.settingsBtn = document.querySelector(".settingsBtn");
+    this.cardsContainer = document.querySelector('.card-list')
     this.cardList = document.querySelectorAll(".card-container");
     this.initialMenu = document.querySelector(".initial");
     this.categoryPage = document.querySelector(".categories");
@@ -36,25 +37,28 @@ export default class Category {
   addEventListeners() {
     this.menuBtn.addEventListener("click", () => this.openMenu());
     this.settingsBtn.addEventListener("click", () => this.openSettings());
-    this.cardList.forEach((item) =>
-      item.addEventListener("click", (e) => {
-        if (e.target.classList.contains("card-score")) return;
-        if (settingsData.isScoreOpen) {
-          e.currentTarget
-            .querySelector(".card-info")
-            .classList.toggle("active-info");
-          return;
-        }
-        this.game.startRound(Array.from(this.cardList).indexOf(item));
-      })
-    );
-    this.scoreBtnList.forEach((item) =>
-      item.addEventListener(
-        "click", () => this.score.openScore(
-          Array.from(this.scoreBtnList).indexOf(item)
-        )
-      )
-    );
+    this.cardsContainer.addEventListener('click', (e) => this.cardListClicksHandler(e))
+  }
+
+  cardListClicksHandler(e) {
+    if (e.target.classList.contains("card-list")) {
+      console.log('container')
+      return
+    } else if (e.target.classList.contains("card-score")) {
+      this.score.openScore(Array.from(this.scoreBtnList).indexOf(e.target))
+    } else {
+      const card = e.target.parentElement.classList.contains('card-item') 
+                   ? e.target.parentElement 
+                   : e.target.parentElement.parentElement;
+      if (settingsData.isScoreOpen) {
+        card
+          .querySelector(".card-info")
+          .classList.toggle("active-info");
+        return;
+      }
+      this.game.startRound(Array.from(this.cardList).indexOf(card.parentElement));
+    }
+    
   }
 
   show(category) {
