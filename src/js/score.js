@@ -36,7 +36,7 @@ export default class Score {
         newImg.src = newImgURL;
         newImg.classList.add('card-img');
         newImg.onload = () => {
-          img.replaceWith(newImg);
+          setTimeout(() => img.replaceWith(newImg), 200);
         };
         if (item) {
           newImg.classList.remove('gray');
@@ -62,7 +62,7 @@ export default class Score {
     setTimeout(() => {
       this.categoryPage.classList.remove('hide');
       targetButton.classList.remove('remove');
-    }, 50);
+    }, 200);
   }
 
   updateCardDescription(card, currentArrayData, index) {
