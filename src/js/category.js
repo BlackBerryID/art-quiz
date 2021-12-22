@@ -34,8 +34,8 @@ export default class Category {
   }
 
   addEventListeners() {
-    this.menuBtn.addEventListener("click", this.openMenu.bind(this));
-    this.settingsBtn.addEventListener("click", this.openSettings.bind(this));
+    this.menuBtn.addEventListener("click", () => this.openMenu());
+    this.settingsBtn.addEventListener("click", () => this.openSettings());
     this.cardList.forEach((item) =>
       item.addEventListener("click", (e) => {
         if (e.target.classList.contains("card-score")) return;
@@ -50,9 +50,7 @@ export default class Category {
     );
     this.scoreBtnList.forEach((item) =>
       item.addEventListener(
-        "click",
-        this.score.openScore.bind(
-          this.score,
+        "click", () => this.score.openScore(
           Array.from(this.scoreBtnList).indexOf(item)
         )
       )

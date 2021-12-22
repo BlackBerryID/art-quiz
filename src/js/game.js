@@ -50,7 +50,7 @@ export default class Game {
 
   addEventListeners() {
     this.exitBtns.forEach((item) => {
-      item.addEventListener("click", this.goBack.bind(this));
+      item.addEventListener("click", () => this.goBack());
     });
   }
 

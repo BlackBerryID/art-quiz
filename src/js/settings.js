@@ -27,7 +27,7 @@ export default class Settings {
       this.goBack(settingsData.prevPage);
       this.writeSettingsData();
     });
-    window.addEventListener("beforeunload", this.writeSettingsData.bind(this));
+    window.addEventListener("beforeunload", () => this.writeSettingsData());
   }
 
   goBack(prevPage) {
