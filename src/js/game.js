@@ -306,36 +306,15 @@ export default class Game {
 
   showFinalPopup() {
     this.popupImage.src = "../assets/png/result.png";
-    let result;
     this.popupArtist.textContent = "";
     this.correctAnswers = this.answersArray.filter((item) => item).length;
-    switch (this.correctAnswers) {
-      case 10:
-        result = "Вы Мастер!";
-        break;
-      case 9:
-        result = "Отличный результат!";
-        break;
-      case 8:
-        result = "Замечательный результат!";
-        break;
-      case 7:
-      case 6:
-        result = "Хороший результат!";
-        break;
-      case 5:
-      case 4:
-        result = "Неплохо, вы на верном пути!";
-        break;
-      case 3:
-      case 2:
-        result = "Вы можете лучше, продолжайте!";
-        break;
-      case 1:
-      case 0:
-        result = "Попробуйте ещё раз.";
-        break;
-    }
+    let result = this.correctAnswers === 10 ? "Вы Мастер!" :
+                 this.correctAnswers === 9 ? "Отличный результат!" :
+                 this.correctAnswers === 8 ? "Замечательный результат!" :
+                 this.correctAnswers === 7 || this.correctAnswers === 6 ? "Хороший результат!" :
+                 this.correctAnswers === 5 || this.correctAnswers === 4 ? "Неплохо, вы на верном пути!" :
+                 this.correctAnswers === 3 || this.correctAnswers === 2 ? "Вы можете лучше, продолжайте!" :
+                 "Попробуйте ещё раз.";
     this.popupPicture.textContent = result;
     this.popupScore.textContent =
       this.correctAnswers === 10 ? "M" : this.correctAnswers;
