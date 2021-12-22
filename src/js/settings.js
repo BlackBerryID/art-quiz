@@ -34,14 +34,15 @@ export default class Settings {
     let page = prevPage === "menu" ? this.initialMenu : this.categoryPage;
     this.settingsSection.classList.add('untouchable')
     this.settingsSection.classList.add('hide')
-    setTimeout(showMenuPage.bind(this), 200);
-    function showMenuPage() {
-      this.settingsSection.classList.add('remove')
-      this.settingsSection.classList.remove('untouchable')
-      page.classList.remove('remove')
-      setTimeout(() => page.classList.remove('hide'), 50);
-    }
+    setTimeout(() => this.showMenuPage(page), 200);
     this.play();
+  }
+
+  showMenuPage(page) {
+    this.settingsSection.classList.add('remove')
+    this.settingsSection.classList.remove('untouchable')
+    page.classList.remove('remove')
+    setTimeout(() => page.classList.remove('hide'), 50);
   }
 
   toggleVolumeButton() {

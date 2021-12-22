@@ -55,24 +55,25 @@ export default class Score {
           newImg.classList.add('gray')
         }
       })
-      setTimeout(showScore.bind(this), 200);
-      function showScore() {
-        targetButton.classList.remove("animate");
-        this.categoryPage.classList.add('remove')
-        targetButton.classList.add('remove')
-        window.scrollTo(0, 0);
-        this.categoryBtn.textContent = "Категории";
-        this.categoryPage.classList.remove('untouchable')
-        this.categoryPage.classList.remove('remove')
-        setTimeout(() => {
-          this.categoryPage.classList.remove('hide')
-            targetButton.classList.remove('remove')
-        }, 50);
-      }
+      setTimeout(() => this.showScore(targetButton), 200);
       this.updateScorePage();
     }, 1000);
     this.player.volume = settingsData.volume;
     this.player.play();
+  }
+
+  showScore(targetButton) {
+    targetButton.classList.remove("animate");
+    this.categoryPage.classList.add('remove')
+    targetButton.classList.add('remove')
+    window.scrollTo(0, 0);
+    this.categoryBtn.textContent = "Категории";
+    this.categoryPage.classList.remove('untouchable')
+    this.categoryPage.classList.remove('remove')
+    setTimeout(() => {
+      this.categoryPage.classList.remove('hide')
+        targetButton.classList.remove('remove')
+    }, 50);
   }
 
   updateCardDescription(card, currentArrayData, index) {
@@ -90,14 +91,15 @@ export default class Score {
     this.categoryPage.classList.add('hide')
     this.player.volume = settingsData.volume;
     this.player.play();
-    setTimeout(showCategoryPage.bind(this), 200);
-    function showCategoryPage() {
-      categoryClass.show(settingsData.activeCategory);
-      this.categoryBtn.textContent = "Настройки";
-      this.categoryPage.classList.remove('untouchable')
-      this.categoryPage.classList.remove('hide')
-    }
+    setTimeout(() => this.showCategoryPage(categoryClass), 200);
     this.updateScorePage();
+  }
+
+  showCategoryPage(categoryClass) {
+    categoryClass.show(settingsData.activeCategory);
+    this.categoryBtn.textContent = "Настройки";
+    this.categoryPage.classList.remove('untouchable')
+    this.categoryPage.classList.remove('hide')
   }
 
   updateScorePage(flag) {

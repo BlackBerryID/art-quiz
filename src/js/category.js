@@ -84,13 +84,7 @@ export default class Category {
   openMenu() {
     this.score.updateScorePage(true);
     this.categoryPage.classList.add('untouchable', 'hide')
-    setTimeout(showMenu.bind(this), 200);
-    function showMenu() {
-      this.categoryPage.classList.add('remove')
-      this.categoryPage.classList.remove('untouchable')
-      this.initialMenu.classList.remove('remove')
-      setTimeout(() => this.initialMenu.classList.remove('hide'), 50);
-    }
+    setTimeout(() => this.showMenu(), 200);
     this.player.volume = settingsData.volume;
     this.player.play();
   }
@@ -102,15 +96,16 @@ export default class Category {
     }
     this.categoryPage.classList.add('untouchable')
     this.categoryPage.classList.add('hide')
-    setTimeout(showMenu.bind(this), 200);
-    function showMenu() {
-      this.categoryPage.classList.add('remove')
-      this.categoryPage.classList.remove('untouchable')
-      this.settingsPage.classList.remove('remove')
-      setTimeout(() => this.settingsPage.classList.remove('hide'), 50);
-    }
+    setTimeout(() => this.showMenu(), 200);
     settingsData.prevPage = "category";
     this.player.volume = settingsData.volume;
     this.player.play();
+  }
+
+  showMenu() {
+    this.categoryPage.classList.add('remove')
+    this.categoryPage.classList.remove('untouchable')
+    this.initialMenu.classList.remove('remove')
+    setTimeout(() => this.initialMenu.classList.remove('hide'), 50);
   }
 }

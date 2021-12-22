@@ -30,17 +30,7 @@ export default class Menu {
     this.initialMenu.classList.add('untouchable')
     setTimeout(() => {
       this.initialMenu.classList.add('hide')
-      setTimeout(showCategoryPage.bind(this), 200);
-      function showCategoryPage() {
-        this.initialMenu.classList.add('remove')
-        this.initialMenu.classList.remove('untouchable')
-        this.categoryPage.classList.remove('remove')
-        this.restoreMenuAppearance(targetCategory);
-        setTimeout(
-          () => this.categoryPage.classList.remove('hide'),
-          50
-        );
-      }
+      setTimeout(() => this.showPage(this.categoryPage, targetCategory), 200);
       this.player.volume = settingsData.volume;
       this.player.play();
       if (targetCategory === "artists") {
@@ -80,15 +70,17 @@ export default class Menu {
   openSettings() {
     this.initialMenu.classList.add('untouchable')
     this.initialMenu.classList.add('hide')
-    setTimeout(showSettingsPage.bind(this), 200);
-    function showSettingsPage() {
-      this.initialMenu.classList.add('remove')
-      this.initialMenu.classList.remove('untouchable')
-      this.settingsPage.classList.remove('remove')
-      setTimeout(() => this.settingsPage.classList.remove('hide'), 50);
-    }
+    setTimeout(() => this.showPage(this.settingsPage), 200);
     settingsData.prevPage = "menu";
     this.player.volume = settingsData.volume;
     this.player.play();
   }
+
+  showPage(page, targetCategory) {
+  this.initialMenu.classList.add('remove')
+  this.initialMenu.classList.remove('untouchable')
+  page.classList.remove('remove')
+  if (targetCategory) this.restoreMenuAppearance(targetCategory);
+  setTimeout(() => page.classList.remove('hide'), 50);
+}
 }

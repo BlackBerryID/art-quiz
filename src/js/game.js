@@ -61,13 +61,7 @@ export default class Game {
         : this.picturesRoundPage;
     currentPage.classList.add('untouchable')
     currentPage.classList.add('hide')
-    setTimeout(showSettingsPage.bind(this), 200);
-    function showSettingsPage() {
-      currentPage.classList.add('remove')
-      currentPage.classList.remove('untouchable')
-      this.categoryPage.classList.remove('remove')
-      setTimeout(() => this.categoryPage.classList.remove('hide'), 50);
-    }
+    setTimeout(() => this.showSettingsPage(currentPage, 'back'), 200);
     this.player.currentTime = 0;
     this.player.volume = settingsData.volume;
     this.player.play();
@@ -98,18 +92,21 @@ export default class Game {
     // "change" pages
     this.categoryPage.classList.add('untouchable')
     this.categoryPage.classList.add('hide')
-    setTimeout(showSettingsPage.bind(this), 200);
-    function showSettingsPage() {
-      this.categoryPage.classList.add('remove')
-      this.categoryPage.classList.remove('untouchable')
-      roundPage.classList.remove('remove')
-      setTimeout(() => roundPage.classList.remove('hide'), 50);
-    }
+    setTimeout(() => this.showSettingsPage(roundPage, 'start'), 200);
     this.player.src = "../assets/mp3/push.mp3";
     this.player.volume = settingsData.volume;
     this.player.play();
 
     this.handleRound(roundData, 0);
+  }
+
+  showSettingsPage(page, action) {
+    const pageForHide = (action === 'start' ? this.categoryPage : page);
+    const pageForShow = (action === 'start' ? page : this.categoryPage);
+    pageForHide.classList.add('remove')
+    pageForHide.classList.remove('untouchable')
+    pageForShow.classList.remove('remove')
+    setTimeout(() => pageForShow.classList.remove('hide'), 50);
   }
 
   handleRound(roundData, index) {
