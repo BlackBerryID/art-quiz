@@ -16,11 +16,11 @@ export default class Settings {
 
   addEventListeners() {
     this.volumeBar.addEventListener("input", () => {
-      this.changeVolume.call(this);
+      this.changeVolume();
       this.play();
     });
     this.volumeBtn.addEventListener("click", () => {
-      this.toggleVolumeButton.call(this);
+      this.toggleVolumeButton();
       this.play();
     });
     this.backButton.addEventListener("click", () => {

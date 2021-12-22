@@ -43,10 +43,7 @@ export default class Category {
             .classList.toggle("active-info");
           return;
         }
-        this.game.startRound.call(
-          this.game,
-          Array.from(this.cardList).indexOf(item)
-        );
+        this.game.startRound(Array.from(this.cardList).indexOf(item));
       })
     );
     this.scoreBtnList.forEach((item) =>

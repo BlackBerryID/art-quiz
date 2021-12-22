@@ -151,8 +151,7 @@ export default class Game {
         );
         const handler = (e) => {
           this.timer.clearInterval();
-          this.checkAnswer.call(
-            this,
+          this.checkAnswer(
             e,
             correctAnswer,
             correctAnswerObject,
@@ -212,8 +211,7 @@ export default class Game {
         this.timer.clearInterval();
         const regEx = new RegExp(correctAnswerObj.imageNum);
         const isCorrect = regEx.test(e.target.src);
-        this.checkAnswer.call(
-          this,
+        this.checkAnswer(
           e,
           isCorrect,
           correctAnswerObj,
@@ -280,11 +278,11 @@ export default class Game {
     this.popupBtn.addEventListener(
       "click",
       () => {
-        this.hidePopup.call(this, img);
+        this.hidePopup(img);
         if (index === 9) {
-          this.showFinalPopup.call(this);
+          this.showFinalPopup();
         } else {
-          this.handleRound.call(this, roundData, ++index);
+          this.handleRound(roundData, ++index);
         }
       },
       { once: true }
@@ -343,7 +341,7 @@ export default class Game {
     this.popupBtn.addEventListener(
       "click",
       () => {
-        this.hideFinalPopup.call(this);
+        this.hideFinalPopup();
       },
       { once: true }
     );

@@ -18,7 +18,7 @@ export default class Menu {
   addEventListeners() {
     this.settingsBtn.addEventListener("click", this.openSettings.bind(this));
     [this.artistsGameBtn, this.picturesGameBtn].forEach((item) =>
-      item.addEventListener("click", (e) => this.openCategory.call(this, e))
+      item.addEventListener("click", (e) => this.openCategory(e))
     );
   }
 
