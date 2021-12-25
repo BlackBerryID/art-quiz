@@ -1,6 +1,8 @@
 import { categoriesData, settingsData, artistsArray, picturesArray } from '../index';
 import Category from './category';
 
+const CARDS_PER_GAME_ROUND = 10;
+
 export default class Score {
   constructor() {
     this.menuBtn = document.querySelector('.menuBtn');
@@ -19,9 +21,8 @@ export default class Score {
       this.categoryPage.classList.add('hide');
       const scoreData = categoriesData[settingsData.activeCategory][cardNum].pictures;
       let currentArrayData = settingsData.activeCategory === 'artists' ? artistsArray : picturesArray;
-      const cardsPerGameRound = 10;
-      const positionOfFirstCard = cardNum * cardsPerGameRound;
-      currentArrayData = currentArrayData.slice(positionOfFirstCard, positionOfFirstCard + cardsPerGameRound);
+      const positionOfFirstCard = cardNum * CARDS_PER_GAME_ROUND;
+      currentArrayData = currentArrayData.slice(positionOfFirstCard, positionOfFirstCard + CARDS_PER_GAME_ROUND);
       scoreData.forEach((item, index) => {
         const card = this.cardList[index];
         this.updateCardDescription(card, currentArrayData, index);
