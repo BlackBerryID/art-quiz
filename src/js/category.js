@@ -3,7 +3,20 @@ import Game from '../js/game';
 import Score from './score';
 
 export default class Category {
-  static monthList;
+  static monthList = [
+    'Январь',
+    'Февраль',
+    'Март',
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+    'Октябрь',
+    'Ноябрь',
+    'Декабрь',
+  ];
 
   constructor() {
     this.menuBtn = document.querySelector('.menuBtn');
@@ -16,20 +29,6 @@ export default class Category {
     this.scoreBtnList = document.querySelectorAll('.card-score');
     this.game = new Game();
     this.score = new Score();
-    Category.monthList = [
-      'Январь',
-      'Февраль',
-      'Март',
-      'Апрель',
-      'Май',
-      'Июнь',
-      'Июль',
-      'Август',
-      'Сентябрь',
-      'Октябрь',
-      'Ноябрь',
-      'Декабрь',
-    ];
     settingsData.monthList = Category.monthList;
     this.player = new Audio('../assets/mp3/push.mp3');
   }
