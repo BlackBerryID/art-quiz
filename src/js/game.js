@@ -2,6 +2,20 @@ import { settingsData, categoriesData, artistsArray, picturesArray } from '../in
 import Category from './category';
 import Timer from './timer';
 
+const FINAL_PHRASES = [
+  'Попробуйте ещё раз.',
+  'Попробуйте ещё раз.',
+  'Вы можете лучше, продолжайте!',
+  'Вы можете лучше, продолжайте!',
+  'Неплохо, вы на верном пути!',
+  'Неплохо, вы на верном пути!',
+  'Хороший результат!',
+  'Хороший результат!',
+  'Замечательный результат!',
+  'Отличный результат!',
+  'Вы Мастер!',
+];
+
 export default class Game {
   constructor() {
     // general
@@ -274,21 +288,7 @@ export default class Game {
     this.popupImage.src = '../assets/png/result.png';
     this.popupArtist.textContent = '';
     this.correctAnswers = this.answersArray.filter((item) => item).length;
-    let result =
-      this.correctAnswers === 10
-        ? 'Вы Мастер!'
-        : this.correctAnswers === 9
-        ? 'Отличный результат!'
-        : this.correctAnswers === 8
-        ? 'Замечательный результат!'
-        : this.correctAnswers === 7 || this.correctAnswers === 6
-        ? 'Хороший результат!'
-        : this.correctAnswers === 5 || this.correctAnswers === 4
-        ? 'Неплохо, вы на верном пути!'
-        : this.correctAnswers === 3 || this.correctAnswers === 2
-        ? 'Вы можете лучше, продолжайте!'
-        : 'Попробуйте ещё раз.';
-    this.popupPicture.textContent = result;
+    this.popupPicture.textContent = FINAL_PHRASES[this.correctAnswers];
     this.popupScore.textContent = this.correctAnswers === 10 ? 'M' : this.correctAnswers;
     this.popupContent.classList.add('final-popup');
     this.popup.classList.remove('hidden');
